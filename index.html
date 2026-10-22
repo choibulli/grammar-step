@@ -1,0 +1,1115 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F7A78"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>문법 한 걸음</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=IBM+Plex+Sans+KR:wght@400;500;700&family=Nunito:wght@600;800&display=swap">
+<style>
+/* Layout: one narrow phone column; home is a winding path of unit stops, lessons take over the screen with a fixed answer bar */
+:root{
+  --bg:#EEF3F6; --card:#FFFFFF; --ink:#18222E; --muted:#5B6878; --line:#D5DEE6;
+  --accent:#0F7A78; --accent-ink:#FFFFFF; --accent-soft:#D3ECEA;
+  --flame:#EF6A1A; --flame-soft:#FDE6D6;
+  --good:#1D8F55; --good-soft:#DDF3E6; --bad:#C93F37; --bad-soft:#FBE1DE;
+  --lock:#B9C4CE;
+  --f-display:"Jua","IBM Plex Sans KR",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-en:"Nunito","IBM Plex Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F161D; --card:#18222C; --ink:#E6EDF3; --muted:#9AA8B6; --line:#2A3743;
+  --accent:#3FB8B2; --accent-ink:#06201F; --accent-soft:#163836;
+  --flame:#FF8A3D; --flame-soft:#3A2416;
+  --good:#4CC584; --good-soft:#15301F; --bad:#F07067; --bad-soft:#3A1C1A; --lock:#3B4855; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F161D; --card:#18222C; --ink:#E6EDF3; --muted:#9AA8B6; --line:#2A3743;
+  --accent:#3FB8B2; --accent-ink:#06201F; --accent-soft:#163836;
+  --flame:#FF8A3D; --flame-soft:#3A2416;
+  --good:#4CC584; --good-soft:#15301F; --bad:#F07067; --bad-soft:#3A1C1A; --lock:#3B4855; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:480px;margin:0 auto;padding-block:16px 140px;display:flex;flex-direction:column;gap:16px}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.en{font-family:var(--f-en);font-weight:600}
+
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--f-display);font-size:24px;color:var(--accent)}
+.pill{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:700;font-variant-numeric:tabular-nums}
+.pill.flame{color:var(--flame)}
+.pill svg{width:18px;height:18px}
+
+.streak{background:var(--flame-soft);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.streak-head{display:flex;align-items:center;gap:12px}
+.streak-num{font-family:var(--f-display);font-size:44px;line-height:1;color:var(--flame);font-variant-numeric:tabular-nums}
+.streak-msg{font-size:14px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;font-size:12px;color:var(--muted)}
+.dot{width:28px;height:28px;margin:4px auto 0;border-radius:50%;border:2px solid var(--line);background:var(--card);display:grid;place-items:center}
+.dot.on{background:var(--flame);border-color:var(--flame)}
+.dot.on svg{width:14px;height:14px;color:#fff}
+.dot.today{border-color:var(--flame)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.card h2{font-size:22px}
+.sub{color:var(--muted);font-size:14px}
+.btn{border:0;border-radius:14px;padding:14px 18px;font-weight:700;font-size:16px;background:var(--accent);color:var(--accent-ink);box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+.btn:disabled{background:var(--lock);color:var(--card);box-shadow:none;cursor:default}
+.btn.ghost{background:transparent;color:var(--accent);box-shadow:none;border:2px solid var(--line)}
+.btn.flame{background:var(--flame);color:#fff;box-shadow:0 4px 0 color-mix(in srgb,var(--flame) 60%,#000)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .btn{flex:1 1 140px}
+.review-card{flex-direction:row;align-items:center;gap:14px}
+.review-card .num{font-family:var(--f-display);font-size:34px;color:var(--bad);min-width:44px;text-align:center;font-variant-numeric:tabular-nums}
+.review-card .txt{flex:1;min-width:0}
+
+.unit{display:flex;flex-direction:column;gap:12px;padding-block:8px}
+.unit-head{display:flex;align-items:baseline;gap:10px;border-bottom:2px dashed var(--line);padding-bottom:8px}
+.unit-no{font-family:var(--f-display);font-size:15px;color:var(--accent);white-space:nowrap}
+.unit-title{font-family:var(--f-en);font-weight:800;font-size:18px}
+.unit.locked .unit-no,.unit.locked .unit-title{color:var(--muted)}
+.stops{display:flex;flex-direction:column;gap:10px}
+.stop{display:flex;align-items:center;gap:14px;background:none;border:0;padding:0;text-align:left;width:100%}
+.stop:nth-child(2){padding-left:56px}
+.node{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);box-shadow:0 5px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+.node svg{width:28px;height:28px}
+.stop.done .node{background:var(--good);box-shadow:0 5px 0 color-mix(in srgb,var(--good) 60%,#000)}
+.stop.rec .node{background:var(--flame);color:#fff;box-shadow:0 5px 0 color-mix(in srgb,var(--flame) 60%,#000)}
+.stop.locked .node{background:var(--lock);box-shadow:0 5px 0 color-mix(in srgb,var(--lock) 70%,#000)}
+.stop.locked{cursor:default}
+.stop .lbl{display:flex;flex-direction:column;min-width:0}
+.stop .lbl b{font-size:16px}
+.stop .lbl span{font-size:13px;color:var(--muted)}
+.stop.rec .lbl span{color:var(--flame);font-weight:700}
+.stop.next .node{outline:4px solid var(--accent-soft);outline-offset:3px}
+.stop.rec.next .node{outline-color:var(--flame-soft)}
+.foot{display:flex;flex-direction:column;gap:8px;align-items:center;padding-top:16px;font-size:13px;color:var(--muted)}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;padding:6px}
+
+.lesson-top{display:flex;align-items:center;gap:12px}
+.x{background:none;border:0;padding:6px;color:var(--muted);display:grid;place-items:center}
+.x svg{width:26px;height:26px}
+.bar{flex:1;height:14px;border-radius:999px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:999px;transition:width .3s}
+.tag{align-self:flex-start;font-size:13px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:999px}
+.tag.review{color:var(--bad);background:var(--bad-soft)}
+.q-guide{font-family:var(--f-display);font-size:22px}
+.sentence{font-size:20px;line-height:1.65;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.blank{display:inline-block;min-width:72px;border-bottom:3px solid var(--accent);color:var(--accent);text-align:center;padding:0 4px}
+.answer-input{width:100%;box-sizing:border-box;font-family:var(--f-en);font-weight:600;font-size:20px;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+.ko{font-size:19px;font-weight:500;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.note{font-size:13px;color:var(--muted)}
+.slot{min-height:110px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;padding:12px 4px;border-bottom:2px solid var(--line);background:repeating-linear-gradient(transparent 0 52px,var(--line) 52px 54px)}
+.bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding-top:8px}
+.chip{font-family:var(--f-en);font-weight:600;font-size:17px;padding:8px 13px;border-radius:12px;background:var(--card);border:2px solid var(--line);box-shadow:0 3px 0 var(--line)}
+.chip.used{visibility:hidden}
+.chip:active{transform:translateY(2px);box-shadow:none}
+
+.concept{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.concept h2{font-size:24px}
+.concept ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.ex{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:12px}
+.ex div{display:flex;flex-direction:column}
+.ex .en{font-size:17px}
+.ex span{font-size:14px;color:var(--muted)}
+.mark{color:var(--accent);font-weight:800}
+
+.answerbar{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--line);
+  padding:14px max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.answerbar .in{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.answerbar.good{background:var(--good-soft);border-color:var(--good)}
+.answerbar.bad{background:var(--bad-soft);border-color:var(--bad)}
+.fb-title{font-family:var(--f-display);font-size:22px}
+.answerbar.good .fb-title{color:var(--good)}
+.answerbar.bad .fb-title{color:var(--bad)}
+.fb-ans{font-family:var(--f-en);font-weight:800;font-size:18px}
+.fb-exp{font-size:14px}
+.answerbar.good .btn{background:var(--good);box-shadow:0 4px 0 color-mix(in srgb,var(--good) 60%,#000);color:#fff}
+.answerbar.bad .btn{background:var(--bad);box-shadow:0 4px 0 color-mix(in srgb,var(--bad) 60%,#000);color:#fff}
+
+.result{align-items:center;text-align:center;gap:14px}
+.big{font-family:var(--f-display);font-size:56px;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.stat{background:var(--bg);border-radius:14px;padding:12px}
+.stat b{display:block;font-family:var(--f-display);font-size:28px;font-weight:400;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+
+.wrongs{display:flex;flex-direction:column;gap:10px}
+.wrongs h2{font-size:20px}
+.w{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--bad);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.w .h{display:flex;justify-content:space-between;gap:8px;font-weight:700;color:var(--bad)}
+.w .h span{color:var(--muted);font-weight:500}
+.w .qq{font-size:16px}
+.w .mine{color:var(--bad)}
+.w .right{color:var(--good);font-weight:700}
+.allgood{background:var(--good-soft);color:var(--good);border-radius:14px;padding:14px;text-align:center;font-weight:700}
+
+.plist{display:flex;flex-direction:column;gap:14px}
+.plist section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.plist h3{font-size:18px}
+.plist ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-size:14px}
+.plist .a{color:var(--good);font-weight:700}
+.confirm{background:var(--bad-soft);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:14px}
+
+@keyframes pop{from{transform:scale(.97)}to{transform:none}}
+.pop{animation:pop .18s ease-out}
+@media (prefers-reduced-motion:reduce){.pop{animation:none}.bar i{transition:none}}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+img{max-width:100%}
+
+:root{--deep:#3D4FA6;--deep-soft:#E1E5F7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--deep:#9DAAF0;--deep-soft:#22284A}}
+:root[data-theme="dark"]{--deep:#9DAAF0;--deep-soft:#22284A}
+.lv{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.lv.l1{color:var(--accent);background:var(--accent-soft)}
+.lv.l2{color:var(--flame);background:var(--flame-soft)}
+.lv.l3{color:var(--deep);background:var(--deep-soft)}
+.topic-head{display:flex;flex-direction:column;gap:6px}
+.topic-head h1{font-size:28px}
+.steps-mini{display:flex;gap:6px}
+.steps-mini i{flex:1;height:8px;border-radius:999px;background:var(--line)}
+.steps-mini i.on{background:var(--good)}
+.part{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.part.next{border:2px solid var(--accent)}
+.part-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.part-no{font-family:var(--f-display);font-size:15px;color:var(--muted)}
+.part h2{font-size:21px;width:100%}
+.part ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.part .btn.done{background:var(--good);box-shadow:0 4px 0 color-mix(in srgb,var(--good) 60%,#000);color:#fff}
+.chip{touch-action:none;user-select:none;-webkit-user-select:none}
+.chip.ph{border-style:dashed;background:transparent;box-shadow:none;color:transparent}
+.chip.ghost{position:fixed;z-index:50;margin:0;pointer-events:none;border-color:var(--accent);box-shadow:0 10px 24px color-mix(in srgb,var(--ink) 25%,transparent);transform:scale(1.06)}
+.ex .en{font-size:17px;color:var(--ink)}
+.ex .en .mark{font-size:inherit;color:var(--accent)}
+.backup .code{width:100%;box-sizing:border-box;min-height:84px;font:13px/1.4 ui-monospace,Menlo,monospace;padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);word-break:break-all;resize:vertical}
+.backup .restore{display:flex;flex-direction:column;gap:10px}
+.backup .msg{font-size:14px;font-weight:700;color:var(--accent)}
+.warn{background:var(--flame-soft);border-color:var(--flame)}
+.warn h2{color:var(--flame)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(16px + env(safe-area-inset-top,0px));z-index:60;background:var(--good);color:#fff;font-weight:700;padding:10px 18px;border-radius:999px}
+</style></head><body>
+
+<div class="wrap" id="app"></div>
+<div class="answerbar" id="abar" hidden><div class="in" id="abar-in"></div></div>
+
+<script>
+/* ---------- 콘텐츠 ----------
+   주제마다 4스텝: 기본 → 기본 → 중2 → 중3
+   b = 빈칸 채우기 [b, 문장(___ 포함), 정답(문자열 또는 배열), 해설]
+   a = 문장 배열   [a, 우리말, 영어 정답 문장, 해설]                       */
+const UNITS=[
+ {n:1,title:"About You and Me"},{n:2,title:"A Delicious World"},{n:3,title:"My Bright Future"},{n:4,title:"Be Safe Everywhere"},
+ {n:5,title:"Enjoying Art"},{n:6,title:"Amazing Korea"},{n:7,title:"Save Earth, Save Us"},{n:8,title:"Dive into Stories"}];
+
+const TOPICS=[
+{id:"t1",u:1,name:"be동사",p:[
+ {h:"형태와 과거형",lv:1,
+  c:["현재: <b>I am</b> / <b>He·She·It is</b> / <b>You·We·They are</b>","과거: am·is → <b>was</b>, are → <b>were</b>","주어가 <b>A and B</b>이면 복수 → are / were","줄임말: I'm, you're, she's, it's, they're"],
+  ex:[["My cat and I <span class=mark>are</span> good friends.","내 고양이와 나는 좋은 친구다."],["They <span class=mark>were</span> at the library yesterday.","그들은 어제 도서관에 있었다."]],
+  q:[["b","My parents ___ teachers at the same school.","are","My parents는 복수라서 are예요."],
+     ["b","I ___ sick yesterday, but I'm fine now.","was","yesterday는 과거, 주어 I → was예요."],
+     ["b","Where ___ you and your brother last night?","were","과거(last night)이고 주어 you and your brother는 복수 → were예요."],
+     ["a","그녀와 나는 같은 동아리에 있었다.","She and I were in the same club.","She and I는 복수, 과거라서 were예요."]]},
+ {h:"부정문과 의문문",lv:1,
+  c:["부정문: be동사 뒤에 <b>not</b> → isn't, aren't, wasn't, weren't (am not은 줄이지 않아요)","의문문: <b>Be동사 + 주어 ~?</b> → Is she ~? / Were they ~?","대답: Yes, I <b>am</b>. / No, she <b>isn't</b>. (Yes 대답은 줄여 쓰지 않아요: Yes, I'm X)","의문사 의문문: <b>의문사 + be동사 + 주어</b> → Where is ~?"],
+  ex:[["Is your brother tall? — No, he <span class=mark>isn't</span>.","너의 형은 키가 크니? — 아니, 그렇지 않아."],["The store <span class=mark>wasn't</span> open.","그 가게는 열려 있지 않았다."]],
+  q:[["b","The museum ___ open yesterday. It was closed. (부정)",["wasn't","was not"],"과거 부정이라 wasn't(= was not)예요."],
+     ["b","A: Are you ready for the test? B: Yes, I ___.","am","Are you ~?에 대한 대답은 Yes, I am. 줄여 쓰지 않아요."],
+     ["b","A: Was the movie boring? B: No, it ___.",["wasn't","was not"],"Was ~?로 물으면 No, it wasn't.로 답해요."],
+     ["a","너의 친구들은 어제 학교에 있었니?","Were your friends at school yesterday?","과거 의문문: Were + 주어(복수) 순서예요."]]},
+ {h:"수일치: 진짜 주어 찾기",lv:2,
+  c:["주어 뒤 꾸밈말(in my class, on the desk)은 빼고 <b>핵심 명사</b>에 맞춰요","<b>Each / Every + 단수명사</b> → 단수","<b>Each of / One of + 복수명사</b> → 단수","<b>The number of</b> ~ (~의 수) → 단수 · <b>A number of</b> ~ (많은 ~) → 복수"],
+  ex:[["One of my friends <span class=mark>is</span> from Japan.","내 친구들 중 한 명은 일본 출신이다."],["The number of students <span class=mark>is</span> increasing.","학생의 수가 늘고 있다."]],
+  q:[["b","The students in my class ___ really interested in K-pop dance.","are","주어는 class가 아니라 The students(복수) → are예요."],
+     ["b","One of the paintings in this room ___ very famous.","is","One of + 복수명사는 '그중 하나'라서 단수 → is예요."],
+     ["b","The number of tourists in Jeonju ___ growing every year.","is","The number of ~는 '~의 수'라서 단수 → is예요."],
+     ["a","우리 반 학생들 각자가 그 행사를 준비하고 있다.","Each of the students in my class is preparing for the event.","Each of + 복수명사는 단수 취급 → is예요."]]},
+ {h:"There is/are · 상관접속사 · 부분 표현",lv:3,
+  c:["<b>There is + 단수</b>(셀 수 없는 명사) / <b>There are + 복수</b>","<b>Both A and B</b> → 복수","<b>Either A or B / Neither A nor B / Not only A but also B</b> → <b>B</b>에 일치","<b>A as well as B</b> → <b>A</b>에 일치","<b>Half of / Most of / Some of / 분수 + 명사</b> → 뒤 명사에 일치"],
+  ex:[["Not only my sister but also my parents <span class=mark>are</span> here.","언니뿐만 아니라 부모님도 여기 계신다."],["Most of the water <span class=mark>is</span> polluted.","그 물의 대부분이 오염되어 있다."]],
+  q:[["b","There ___ a lot of differences between my sister and me.","are","진짜 주어 a lot of differences가 복수 → are예요."],
+     ["b","Neither my brother nor I ___ good at cooking.","am","Neither A nor B는 B(I)에 맞춰 am이에요."],
+     ["b","My best friend, as well as her parents, ___ from Canada.","is","A as well as B는 A(My best friend)에 맞춰 is예요."],
+     ["a","그 케이크의 절반이 아직 탁자 위에 있다.","Half of the cake is still on the table.","Half of 뒤 the cake(단수)에 맞춰 is예요."]]}]},
+
+{id:"t2",u:1,name:"일반동사",p:[
+ {h:"3인칭 단수 만들기",lv:1,
+  c:["주어가 3인칭 단수 + 현재 → 대부분 <b>+s</b>","-s, -sh, -ch, -x, -o → <b>+es</b> (washes, teaches, fixes, goes, does)","자음 + y → <b>y를 i로 + es</b> (study → studies, cry → cries)","모음 + y → <b>+s</b> (play → plays, buy → buys) · have → <b>has</b>"],
+  ex:[["He <span class=mark>fixes</span> old bikes.","그는 오래된 자전거를 고친다."],["She <span class=mark>plays</span> the flute.","그녀는 플루트를 연주한다."]],
+  q:[["b","My uncle ___ English to high school students. (teach)","teaches","-ch로 끝나면 -es → teaches예요."],
+     ["b","The baby ___ when she is hungry. (cry)","cries","자음 + y는 y를 i로 바꾸고 -es → cries예요."],
+     ["b","My brother always ___ computer games after school. (play)","plays","모음 + y는 그냥 -s → plays예요."],
+     ["a","그는 일주일에 두 번 엄마를 위해 설거지를 한다.","He washes the dishes for his mom twice a week.","-sh로 끝나는 wash → washes예요."]]},
+ {h:"부정문과 의문문",lv:1,
+  c:["부정문: <b>don't / doesn't + 동사원형</b>","의문문: <b>Do / Does + 주어 + 동사원형 ~?</b>","대답: Yes, he <b>does</b>. / No, he <b>doesn't</b>.","주의: She doesn't <s>likes</s> → She doesn't <b>like</b>"],
+  ex:[["She <span class=mark>doesn't eat</span> meat.","그녀는 고기를 먹지 않는다."],["<span class=mark>Does</span> he live near here? — Yes, he does.","그는 이 근처에 사니? — 응, 그래."]],
+  q:[["b","Jiho doesn't ___ much free time these days. (have)","have","doesn't 뒤에는 동사원형 have예요."],
+     ["b","How often ___ your sister practice the violin?","does","your sister는 3인칭 단수 → does, 동사는 원형 practice예요."],
+     ["b","A: Does your dad cook dinner? B: No, he ___.",["doesn't","does not"],"Does ~?로 물으면 No, he doesn't.로 답해요."],
+     ["a","그는 주말마다 할머니 댁을 방문하지 않는다.","He doesn't visit his grandmother on weekends.","doesn't 뒤에는 원형 visit이에요."]]},
+ {h:"주어 찾기와 빈도부사",lv:2,
+  c:["<b>Everyone / Everybody / Nobody / Each</b> → 단수 취급","주어가 길면 핵심 명사를 찾아요: The girl <i>who sits next to me</i> <b>goes</b> ~","빈도부사(always, usually, often, sometimes, never) 위치: <b>일반동사 앞</b>, <b>be동사·조동사 뒤</b>"],
+  ex:[["Everybody in my class <span class=mark>likes</span> the new teacher.","우리 반 모두가 새 선생님을 좋아한다."],["She is <span class=mark>always</span> kind. / She <span class=mark>always</span> helps me.","그녀는 항상 친절하다. / 그녀는 항상 나를 돕는다."]],
+  q:[["b","Everyone in my family ___ breakfast together on Sundays. (eat)","eats","Everyone은 단수 취급 → eats예요."],
+     ["b","The girl who sits next to me ___ to school by bike. (go)","goes","핵심 주어 The girl(단수) → goes예요."],
+     ["b","Nobody in our school ___ the answer. (know)","knows","Nobody는 단수 취급 → knows예요."],
+     ["a","그녀는 자기 전에 항상 일기를 쓴다.","She always writes in her diary before she goes to bed.","always는 일반동사 writes 앞에 와요."]]},
+ {h:"현재시제의 여러 쓰임",lv:3,
+  c:["습관·반복: I <b>get up</b> at 7.","변하지 않는 사실: The sun <b>rises</b> in the east.","정해진 일정(미래 의미): The train <b>leaves</b> at 6 tomorrow.","<b>시간·조건 부사절</b>(when, if, before, after)에서는 미래 대신 <b>현재</b>: If it <b>rains</b> tomorrow, ~"],
+  ex:[["Water <span class=mark>boils</span> at 100°C.","물은 100°C에서 끓는다."],["If it <span class=mark>rains</span> tomorrow, we will stay home.","내일 비가 오면 우리는 집에 있을 것이다. (will rain X)"]],
+  q:[["b","Water ___ at 100°C. (boil)","boils","변하지 않는 사실은 현재시제 → boils예요."],
+     ["b","If it ___ tomorrow, we will cancel the picnic. (rain)","rains","조건 부사절에서는 미래 대신 현재 → rains예요."],
+     ["b","The next train ___ at 6:30 tomorrow morning. (leave)","leaves","정해진 일정은 현재시제로 미래를 나타내요."],
+     ["a","그가 집에 오면 나는 그에게 그 소식을 말할 것이다.","When he comes home, I will tell him the news.","시간 부사절 When 안에서는 현재 comes예요."]]}]},
+
+{id:"t3",u:2,name:"현재진행형",p:[
+ {h:"형태와 -ing 만들기",lv:1,
+  c:["<b>be동사 + 동사-ing</b>: ~하고 있다","-e로 끝나면 e를 빼고 +ing (make → making)","단모음 + 단자음 → 자음 하나 더 (cut → cutting, run → running)","-ie → <b>-ying</b> (lie → lying, die → dying)"],
+  ex:[["The chef <span class=mark>is cutting</span> the carrots.","요리사가 당근을 썰고 있다."],["The dog <span class=mark>is lying</span> on the grass.","개가 잔디 위에 누워 있다."]],
+  q:[["b","The chef is ___ the onions into small pieces. (cut)","cutting","cut은 t를 하나 더 써서 cutting이에요."],
+     ["b","Look at those people! They ___ in line to buy bread. (wait)",["are waiting","'re waiting"],"They + are + waiting이에요."],
+     ["b","The cat is ___ on the sofa. (lie)","lying","-ie로 끝나면 ie를 y로 바꿔 lying이에요."],
+     ["a","그들은 지금 축제를 위해 전통 음식을 준비하고 있다.","They are preparing traditional food for the festival now.","prepare는 e를 빼고 preparing이에요."]]},
+ {h:"부정문과 의문문",lv:1,
+  c:["부정문: <b>be동사 + not + -ing</b>","의문문: <b>Be동사 + 주어 + -ing ~?</b>","의문사 의문문: <b>What are you doing?</b>"],
+  ex:[["I'm <span class=mark>not watching</span> TV.","나는 TV를 보고 있지 않다."],["What <span class=mark>are</span> you <span class=mark>cooking</span>?","너는 무엇을 요리하고 있니?"]],
+  q:[["b","Why ___ you lying on the floor? (be)","are","you의 be동사 are + lying이에요."],
+     ["b","A: Is she making a cake? B: No, she ___. She's baking bread.",["isn't","is not"],"Is ~?로 물으면 No, she isn't.로 답해요."],
+     ["b","We ___ not watching TV now. We're studying.","are","We의 be동사 are + not + -ing예요."],
+     ["a","너는 왜 내 휴대전화를 사용하고 있니?","Why are you using my cell phone?","의문사 + be동사 + 주어 + -ing 순서예요."]]},
+ {h:"진행형으로 쓰지 않는 동사",lv:2,
+  c:["상태를 나타내는 동사는 진행형 X: <b>know, like, love, want, need, believe, own, have(가지다)</b>","단, have가 '먹다, (시간을) 보내다'이면 진행형 가능: We're <b>having</b> lunch."],
+  ex:[["I <span class=mark>know</span> the answer. (am knowing X)","나는 그 답을 안다."],["We <span class=mark>are having</span> dinner now.","우리는 지금 저녁을 먹고 있다."]],
+  q:[["b","I ___ the answer to this question now. (know)","know","know는 상태동사라 진행형으로 쓰지 않아요."],
+     ["b","She ___ a new phone. She bought it yesterday. (have, 가지다)","has","'가지다'의 have는 진행형 X → has예요."],
+     ["b","Shh! My parents ___ dinner in the kitchen. (have, 먹다)",["are having","'re having"],"'먹다'의 have는 진행형 가능 → are having이에요."],
+     ["a","나는 지금 새 운동화가 필요하다.","I need new sneakers now.","need는 상태동사라 am needing으로 쓰지 않아요."]]},
+ {h:"과거진행형과 미래 의미의 진행형",lv:3,
+  c:["과거진행형: <b>was / were + -ing</b> (그때 ~하고 있었다)","<b>when / while</b>과 자주 써요: <b>While</b> I was cooking, the phone rang.","가까운 미래의 확정된 계획: I'm <b>leaving</b> for Jeju tomorrow."],
+  ex:[["I <span class=mark>was sleeping</span> when you called.","네가 전화했을 때 나는 자고 있었다."],["We <span class=mark>are meeting</span> him tomorrow.","우리는 내일 그를 만날 예정이다."]],
+  q:[["b","I ___ a shower when you called me. (take)","was taking","전화한 그때 하고 있던 일 → was taking이에요."],
+     ["b","While we ___ dinner, the lights went out. (have)","were having","과거 그 순간 진행 중 → were having이에요."],
+     ["b","We ___ for Jeju tomorrow. The tickets are ready. (leave)",["are leaving","'re leaving"],"확정된 가까운 미래 계획은 현재진행형으로 써요."],
+     ["a","그 요리사는 손님들을 위해 특별한 수프를 만들고 있었다.","The cook was making a special soup for the guests.","과거진행형 was making이에요."]]}]},
+
+{id:"t4",u:2,name:"동명사",p:[
+ {h:"동명사의 역할",lv:1,
+  c:["동사 + ing = <b>~하는 것</b> (명사 역할)","주어 자리: <b>Cooking</b> is fun. → 동명사 주어는 <b>단수</b> 취급","목적어 자리: I like <b>cooking</b>. · 보어 자리: My hobby is <b>cooking</b>."],
+  ex:[["<span class=mark>Eating</span> vegetables is good for you.","채소를 먹는 것은 몸에 좋다. (vegetables에 속지 말기)"],["My job is <span class=mark>teaching</span> kids.","내 일은 아이들을 가르치는 것이다."]],
+  q:[["b","Sharing meals with your family ___ good for your health. (be)","is","동명사 주어는 단수 취급 → is예요."],
+     ["b","My hobby is ___ cookies for my friends. (bake)","baking","보어 자리 동명사 → baking이에요."],
+     ["b","___ too much sugar is bad for your teeth. (eat)","eating","주어 자리 '먹는 것' → Eating이에요."],
+     ["a","다양한 나라의 음식을 맛보는 것은 나의 취미 중 하나이다.","Tasting food from different countries is one of my hobbies.","동명사 주어는 단수라 is예요."]]},
+ {h:"동명사를 목적어로 쓰는 동사",lv:1,
+  c:["<b>enjoy, finish, mind, avoid, give up, keep, practice</b> + 동명사","stop + 동명사 = ~하던 것을 멈추다"],
+  ex:[["She enjoys <span class=mark>trying</span> new food.","그녀는 새로운 음식 먹어 보는 것을 즐긴다."],["Keep <span class=mark>stirring</span> the soup.","수프를 계속 저어라."]],
+  q:[["b","Would you mind ___ the window? (open)","opening","mind 뒤에는 동명사 → opening이에요."],
+     ["b","He gave up ___ fast food for his health. (eat)","eating","give up 뒤에는 동명사예요."],
+     ["b","Keep ___ the soup, or it will burn. (stir)","stirring","keep 뒤에는 동명사. stir는 r을 하나 더 → stirring이에요."],
+     ["a","그녀는 저녁 식사 후에 설거지하는 것을 끝냈다.","She finished washing the dishes after dinner.","finish 뒤에는 동명사예요."]]},
+ {h:"전치사 뒤 동명사와 관용 표현",lv:2,
+  c:["<b>전치사 뒤에는 동명사</b>: Thank you <b>for</b> helping / be good <b>at</b> cooking / be interested <b>in</b> drawing","<b>look forward to + -ing</b> (to는 전치사!)","<b>be busy -ing</b> ~하느라 바쁘다 · <b>feel like -ing</b> ~하고 싶다 · <b>How about -ing?</b> ~하는 게 어때? · <b>go -ing</b> ~하러 가다"],
+  ex:[["I'm looking forward to <span class=mark>seeing</span> you.","너를 만나기를 고대하고 있어."],["How about <span class=mark>ordering</span> pizza?","피자를 주문하는 게 어때?"]],
+  q:[["b","Thank you for ___ me your recipe. (send)","sending","전치사 for 뒤에는 동명사예요."],
+     ["b","I'm looking forward to ___ the new restaurant. (visit)","visiting","look forward to의 to는 전치사 → visiting이에요."],
+     ["b","My mom is busy ___ dinner for the guests. (prepare)","preparing","be busy -ing = ~하느라 바쁘다예요."],
+     ["a","나는 오늘 밤에 외식하고 싶은 기분이다.","I feel like eating out tonight.","feel like + -ing = ~하고 싶다예요."]]},
+ {h:"동명사 vs to부정사",lv:3,
+  c:["to부정사만 목적어로: <b>want, hope, plan, decide, promise, expect</b>","둘 다 가능(뜻 같음): <b>like, love, start, begin</b>","뜻이 달라지는 동사:<br><b>remember / forget + -ing</b> 과거에 한 일 ↔ <b>+ to</b> 앞으로 할 일<br><b>stop + -ing</b> ~하던 것을 멈추다 ↔ <b>stop + to</b> ~하기 위해 멈추다<br><b>try + -ing</b> 시험 삼아 해보다 ↔ <b>try + to</b> ~하려고 애쓰다"],
+  ex:[["I remember <span class=mark>meeting</span> her.","나는 그녀를 만났던 것을 기억한다."],["Remember <span class=mark>to lock</span> the door.","문 잠그는 것을 기억해라. (앞으로 할 일)"]],
+  q:[["b","Don't forget ___ the milk on your way home. (buy)","to buy","앞으로 할 일을 잊지 마라 → forget to buy예요."],
+     ["b","I remember ___ this restaurant when I was a child. (visit)","visiting","어렸을 때 한 일(과거) → remember visiting이에요."],
+     ["b","He stopped ___ junk food because it was bad for his health. (eat)","eating","먹던 것을 멈췄다 → stopped eating이에요."],
+     ["a","그는 물을 마시기 위해 멈췄다.","He stopped to drink some water.","~하기 위해 멈추다 → stop to + 동사원형이에요."]]}]},
+
+{id:"t5",u:3,name:"과거시제",p:[
+ {h:"규칙 동사",lv:1,
+  c:["대부분 <b>+ed</b> · -e로 끝나면 <b>+d</b> (live → lived)","자음 + y → <b>y를 i로 + ed</b> (study → studied)","단모음 + 단자음 → 자음 하나 더 + ed (plan → planned, stop → stopped)","yesterday, ago, last ~, when I was young → 과거"],
+  ex:[["We <span class=mark>planned</span> a trip.","우리는 여행을 계획했다."],["She <span class=mark>studied</span> all night.","그녀는 밤새 공부했다."]],
+  q:[["b","When I was young, I ___ of becoming a pilot. (dream)",["dreamed","dreamt"],"When I was young은 과거 → dreamed예요."],
+     ["b","We ___ a trip to Gyeongju last spring. (plan)","planned","plan은 n을 하나 더 써서 planned예요."],
+     ["b","She ___ hard for the exam last night. (study)","studied","자음 + y → studied예요."],
+     ["a","그 버스는 우리 학교 앞에서 갑자기 멈췄다.","The bus suddenly stopped in front of our school.","stop은 p를 하나 더 써서 stopped예요."]]},
+ {h:"불규칙 동사",lv:1,
+  c:["give → <b>gave</b>, buy → <b>bought</b>, teach → <b>taught</b>, think → <b>thought</b>, catch → <b>caught</b>","begin → <b>began</b>, leave → <b>left</b>, win → <b>won</b>, choose → <b>chose</b>","모양이 같은 것: put → put, cut → cut, read → read (발음은 [red])"],
+  ex:[["He <span class=mark>gave</span> a speech.","그는 연설을 했다."],["I <span class=mark>thought</span> about my future.","나는 나의 미래에 대해 생각했다."]],
+  q:[["b","She ___ a great speech about her future job two days ago. (give)","gave","give의 과거형은 gave예요."],
+     ["b","My dad ___ me a book about scientists last week. (buy)","bought","buy의 과거형은 bought예요."],
+     ["b","Our English teacher ___ us a new song yesterday. (teach)","taught","teach의 과거형은 taught예요."],
+     ["a","나는 작년에 처음으로 내 미래의 직업에 대해 진지하게 생각했다.","I thought seriously about my future job for the first time last year.","think의 과거형은 thought예요."]]},
+ {h:"부정문과 의문문",lv:1,
+  c:["일반동사: <b>didn't + 동사원형</b> / <b>Did + 주어 + 동사원형 ~?</b>","be동사: <b>wasn't / weren't</b> / <b>Was / Were + 주어 ~?</b>","didn't 뒤에 과거형 X: He didn't <s>went</s> → He didn't <b>go</b>"],
+  ex:[["He <span class=mark>didn't go</span> to school.","그는 학교에 가지 않았다."],["<span class=mark>Did</span> you <span class=mark>win</span>?","너는 이겼니?"]],
+  q:[["b","He didn't ___ the bus this morning. (catch)","catch","didn't 뒤에는 원형 catch예요."],
+     ["b","___ you enjoy the concert last night?","did","일반동사 과거 의문문은 Did로 시작해요."],
+     ["b","They ___ at home yesterday. They were at the park. (be, 부정)",["weren't","were not"],"They의 be동사 과거 부정 → weren't예요."],
+     ["a","너는 어떻게 그 문제를 해결했니?","How did you solve the problem?","의문사 + did + 주어 + 동사원형이에요."]]},
+ {h:"과거 vs 현재완료",lv:3,
+  c:["현재완료: <b>have / has + 과거분사(p.p.)</b> — 과거 일이 지금까지 이어지거나 영향을 줄 때","경험(ever, never, ~ times) · 계속(for, since) · 완료(just, already) · 결과","분명한 과거 시점(<b>yesterday, ago, last ~, when</b>)과는 현재완료 X → 과거시제"],
+  ex:[["I <span class=mark>have lived</span> here for five years.","나는 5년 동안 여기에 살아왔다. (지금도 삶)"],["I <span class=mark>lived</span> in Busan two years ago.","나는 2년 전에 부산에 살았다."]],
+  q:[["b","I ___ in Daejeon since 2020. (live)","have lived","since(~ 이후로 계속) → 현재완료 have lived예요."],
+     ["b","She ___ her homework an hour ago. (finish)","finished","an hour ago는 분명한 과거 시점 → 과거 finished예요."],
+     ["b","Have you ever ___ Korean food in another country? (try)","tried","현재완료 경험: Have you ever + p.p. → tried예요."],
+     ["a","나는 그 영화를 세 번 본 적이 있다.","I have seen the movie three times.","경험은 have + p.p.(seen)예요."]]}]},
+
+{id:"t6",u:3,name:"접속사",p:[
+ {h:"and / but / or / so",lv:1,
+  c:["<b>and</b> 그리고 · <b>but</b> 그러나 · <b>or</b> 또는 · <b>so</b> 그래서","so 뒤에는 <b>결과</b>: It rained, <b>so</b> I stayed home."],
+  ex:[["I like math, <span class=mark>but</span> she likes art.","나는 수학을 좋아하지만 그녀는 미술을 좋아한다."],["I was hungry, <span class=mark>so</span> I ate ramyeon.","나는 배가 고파서 라면을 먹었다."]],
+  q:[["b","My phone's battery was dead, ___ I couldn't call my mom.","so","배터리가 나간 것(원인) → 전화 못 함(결과) → so예요."],
+     ["b","He practiced a lot, ___ he didn't win the contest.","but","연습했지만 이기지 못함 → 반대 내용 but이에요."],
+     ["b","Would you like tea ___ coffee?","or","둘 중 하나를 고를 때 or예요."],
+     ["a","날씨가 너무 더워서 우리는 집에 머물기로 했다.","It was too hot, so we decided to stay at home.","원인, so + 결과 순서예요."]]},
+ {h:"시간 접속사",lv:1,
+  c:["<b>when</b> ~할 때 · <b>before</b> ~ 전에 · <b>after</b> ~ 후에 · <b>while</b> ~하는 동안","시간 접속사 뒤에서는 미래 대신 <b>현재</b>: When I <b>arrive</b>, I'll call you."],
+  ex:[["Brush your teeth <span class=mark>before</span> you go to bed.","자기 전에 이를 닦아라."],["<span class=mark>While</span> I was reading, he came in.","내가 책을 읽는 동안 그가 들어왔다."]],
+  q:[["b","Wash your hands ___ you eat. (~ 전에)","before","~ 전에 → before예요."],
+     ["b","I'll call you ___ I arrive at the station. (~할 때)","when","~할 때 → when, 뒤에는 현재 arrive예요."],
+     ["b","Don't use your phone ___ you are walking. (~하는 동안)","while","~하는 동안 → while이에요."],
+     ["a","나는 숙제를 끝낸 후에 축구를 했다.","I played soccer after I finished my homework.","~한 후에 → after + 주어 + 동사예요."]]},
+ {h:"명령문 + and / or, if / unless",lv:2,
+  c:["<b>명령문, and</b> ~ : ~해라, 그러면 …","<b>명령문, or</b> ~ : ~해라, 그렇지 않으면 …","<b>if</b> 만약 ~라면 · <b>unless</b> = if ~ not (~하지 않으면)"],
+  ex:[["Leave now, <span class=mark>or</span> you'll be late.","지금 출발해, 그렇지 않으면 늦을 거야."],["<span class=mark>Unless</span> you hurry, you'll miss it.","서두르지 않으면 놓칠 거야."]],
+  q:[["b","Hurry up, ___ you will miss the school bus. (그렇지 않으면)","or","명령문, or ~ = 그렇지 않으면이에요."],
+     ["b","Study hard, ___ you will pass the exam. (그러면)","and","명령문, and ~ = 그러면이에요."],
+     ["b","___ you leave now, you will be late. (~하지 않으면)","unless","unless = if ~ not이에요."],
+     ["a","일찍 일어나라, 그러면 첫 기차를 탈 수 있을 것이다.","Get up early, and you will catch the first train.","명령문, and ~ = 그러면이에요."]]},
+ {h:"상관접속사",lv:3,
+  c:["<b>both A and B</b> A와 B 둘 다","<b>either A or B</b> A 또는 B 중 하나","<b>neither A nor B</b> A도 B도 아닌","<b>not only A but also B</b> = <b>B as well as A</b> A뿐만 아니라 B도","A와 B는 같은 형태로 맞춰요 (명사-명사, 동명사-동명사)"],
+  ex:[["She speaks <span class=mark>not only</span> English <span class=mark>but also</span> French.","그녀는 영어뿐만 아니라 프랑스어도 한다."],["<span class=mark>Neither</span> Tom <span class=mark>nor</span> I was there.","Tom도 나도 거기 없었다."]],
+  q:[["b","You can choose either the red one ___ the blue one.","or","either A or B 짝이에요."],
+     ["b","She can speak not only English ___ also Chinese.","but","not only A but also B 짝이에요."],
+     ["b","___ my sister nor I like horror movies.","neither","nor와 짝은 neither예요."],
+     ["a","그는 노래와 춤 둘 다 잘한다.","He is good at both singing and dancing.","both A and B, 같은 동명사 형태로 맞춰요."]]}]},
+
+{id:"t7",u:4,name:"to부정사 (명사적 용법)",p:[
+ {h:"목적어로 쓰는 to부정사",lv:1,
+  c:["<b>to + 동사원형</b> = ~하는 것, ~하기","<b>want, hope, plan, decide, promise, need, learn</b> + to부정사"],
+  ex:[["I want <span class=mark>to learn</span> first aid.","나는 응급처치를 배우고 싶다."],["We decided <span class=mark>to walk</span>.","우리는 걷기로 결정했다."]],
+  q:[["b","She decided ___ a helmet every time. (wear)","to wear","decide + to부정사예요."],
+     ["b","We need ___ the safety rules before the trip. (learn)","to learn","need + to부정사예요."],
+     ["b","I hope ___ you again soon. (see)","to see","hope + to부정사예요."],
+     ["a","그는 소방관이 되기를 원한다.","He wants to become a firefighter.","want + to + 동사원형이에요."]]},
+ {h:"주어·보어 & 가주어 It",lv:1,
+  c:["주어 자리 to부정사는 보통 <b>It</b>으로 바꿔 써요: <b>It</b> is dangerous <b>to swim</b> here.","보어 자리: My dream is <b>to be</b> a nurse."],
+  ex:[["<span class=mark>It</span> is fun <span class=mark>to learn</span> languages.","언어를 배우는 것은 재미있다."],["My plan is <span class=mark>to exercise</span> every day.","내 계획은 매일 운동하는 것이다."]],
+  q:[["b","It is important ___ enough sleep every night. (get)","to get","It(가주어) ~ to get(진주어)이에요."],
+     ["b","Her goal is ___ a safety expert in the future. (become)","to become","보어 자리 to부정사예요."],
+     ["b","___ is dangerous to swim in this river.","it","진주어 to swim을 대신하는 가주어 It이에요."],
+     ["a","공공장소에서 안전 규칙을 따르는 것은 필수적이다.","It is necessary to follow safety rules in public places.","It ~ to부정사 구조예요."]]},
+ {h:"의문사 + to부정사 · 부정",lv:2,
+  c:["<b>what to do</b> 무엇을 할지 · <b>how to use</b> 사용하는 방법 · <b>where to go</b> 어디로 갈지 · <b>when to start</b> 언제 시작할지","= 의문사 + 주어 + should + 동사원형","to부정사 부정: <b>not to</b> + 동사원형"],
+  ex:[["I don't know <span class=mark>what to do</span>.","나는 무엇을 해야 할지 모르겠다."],["He promised <span class=mark>not to be</span> late.","그는 늦지 않겠다고 약속했다."]],
+  q:[["b","I don't know what ___ for my friend's birthday. (buy)","to buy","what to buy = 무엇을 살지예요."],
+     ["b","Can you tell me how ___ this fire extinguisher? (use)","to use","how to use = 사용하는 방법이에요."],
+     ["b","He promised ___ late for class again. (not, be)","not to be","to부정사 부정은 not을 to 앞에 → not to be예요."],
+     ["a","나는 지진이 났을 때 무엇을 해야 할지 몰랐다.","I didn't know what to do during the earthquake.","what to do = 무엇을 해야 할지예요."]]},
+ {h:"의미상 주어 · 목적어 + to부정사",lv:3,
+  c:["<b>It is + 형용사 + for 사람 + to ~</b>: It is hard <b>for me</b> to wake up early.","사람의 성격 형용사(kind, nice, wise, careless, rude)는 <b>of 사람</b>","<b>want / ask / tell / advise + 목적어 + to부정사</b>: Mom told <b>me to wear</b> a helmet."],
+  ex:[["It was kind <span class=mark>of you</span> to help me.","나를 도와주다니 너는 친절했다."],["She asked <span class=mark>me to close</span> the window.","그녀는 나에게 창문을 닫아 달라고 했다."]],
+  q:[["b","It is difficult ___ children to understand this rule.","for","일반 형용사 difficult → for + 사람이에요."],
+     ["b","It was careless ___ him to leave the door open.","of","성격 형용사 careless → of + 사람이에요."],
+     ["b","My mom told me ___ my seat belt. (wear)","to wear","tell + 목적어 + to부정사예요."],
+     ["a","선생님은 우리에게 복도에서 뛰지 말라고 말씀하셨다.","The teacher told us not to run in the hallway.","tell + 목적어 + not to + 동사원형이에요."]]}]},
+
+{id:"t8",u:4,name:"조동사",p:[
+ {h:"can / may / will",lv:1,
+  c:["<b>can</b> ~할 수 있다(= be able to), ~해도 된다 · 과거 <b>could</b>","<b>may</b> ~해도 된다 / ~일지도 모른다","<b>will</b> ~할 것이다 (= be going to)","조동사 뒤에는 항상 <b>동사원형</b>"],
+  ex:[["She <span class=mark>could</span> read at four.","그녀는 네 살에 글을 읽을 수 있었다."],["It <span class=mark>may</span> snow tonight.","오늘 밤 눈이 올지도 모른다."]],
+  q:[["b","She ___ swim when she was five. (~할 수 있었다)","could","과거의 능력 → could예요."],
+     ["b","Take an umbrella. It ___ rain this afternoon. (~일지도 모른다)",["may","might"],"약한 추측 → may예요."],
+     ["b","He will be able ___ the bike next week. (fix)","to fix","be able to + 동사원형 = can이에요."],
+     ["a","제가 당신의 펜을 써도 될까요?","May I use your pen?","허락을 구할 때 May I ~?예요."]]},
+ {h:"must / have to / should",lv:1,
+  c:["<b>must = have to</b> 반드시 ~해야 한다 (주어가 3인칭 단수면 has to)","<b>must not</b> ~하면 안 된다 (금지)","<b>don't have to</b> ~할 필요가 없다 (불필요)","<b>should</b> ~하는 게 좋다 (충고)"],
+  ex:[["You <span class=mark>must not</span> swim here.","여기서 수영하면 안 된다."],["You <span class=mark>don't have to</span> hurry.","서두를 필요는 없다."]],
+  q:[["b","Tomorrow is a holiday, so you don't ___ get up early.","have to","don't have to = ~할 필요가 없다예요."],
+     ["b","You ___ not use your phone while you are crossing the street. (금지)",["must","should"],"금지 → must not / should not이에요."],
+     ["b","She ___ to wear a uniform at her school. (have)","has","주어 She → has to예요."],
+     ["a","너는 수업 시간에 휴대전화를 사용해서는 안 된다.","You must not use your phone during class.","must not + 동사원형 = 금지예요."]]},
+ {h:"had better · would like to · used to",lv:2,
+  c:["<b>had better + 동사원형</b> ~하는 편이 낫다 · 부정 <b>had better not</b>","<b>would like to</b> ~하고 싶다 (want to보다 공손)","<b>used to + 동사원형</b> ~하곤 했다, 예전에는 ~였다 (지금은 아님)"],
+  ex:[["You <span class=mark>had better</span> see a doctor.","너는 병원에 가 보는 게 좋겠다."],["I <span class=mark>used to</span> live in Seoul.","나는 예전에 서울에 살았다."]],
+  q:[["b","You ___ better take an umbrella. It looks like rain.","had","had better + 동사원형이에요."],
+     ["b","You had better ___ swim here. The water is deep. (부정)","not","had better의 부정은 had better not이에요."],
+     ["b","There ___ to be a big tree in front of my house. (예전에는 있었다)","used","used to be = 예전에는 ~였다예요."],
+     ["a","나는 어렸을 때 밤에 무서워하곤 했다.","I used to be scared at night when I was young.","used to + 동사원형 = ~하곤 했다예요."]]},
+ {h:"추측의 조동사",lv:3,
+  c:["<b>must be</b> ~임이 틀림없다 (강한 확신)","<b>can't be</b> ~일 리가 없다","<b>may / might be</b> ~일지도 모른다","참고: 과거 추측은 <b>must have + p.p.</b> (~했음이 틀림없다)"],
+  ex:[["He <span class=mark>must be</span> hungry.","그는 배가 고픈 게 틀림없다."],["It <span class=mark>can't be</span> true.","그것은 사실일 리가 없다."]],
+  q:[["b","He ran ten kilometers. He ___ be tired. (~임이 틀림없다)","must","강한 확신의 추측 → must예요."],
+     ["b","That ___ be Minji. She's in Busan now. (~일 리가 없다)",["can't","cannot"],"부정적 확신 → can't be예요."],
+     ["b","I'm not sure, but she ___ be at the library. (~일지도 모른다)",["may","might"],"약한 추측 → may / might예요."],
+     ["a","그 이야기는 사실일 리가 없다.","The story can't be true.","~일 리가 없다 → can't be예요."]]}]},
+
+{id:"t9",u:5,name:"재귀대명사",p:[
+ {h:"형태",lv:1,
+  c:["단수: <b>myself, yourself, himself, herself, itself</b>","복수: <b>ourselves, yourselves, themselves</b>","you가 한 명이면 yourself, 여러 명이면 yourselves"],
+  ex:[["We enjoyed <span class=mark>ourselves</span>.","우리는 즐거운 시간을 보냈다."],["Help <span class=mark>yourselves</span>, everyone.","모두 마음껏 드세요."]],
+  q:[["b","We felt proud of ___.","ourselves","We의 재귀대명사 → ourselves예요."],
+     ["b","The kids really enjoyed ___ at the art workshop.","themselves","The kids(복수) → themselves예요."],
+     ["b","Help ___ to some cookies, everyone!","yourselves","everyone(여러 명)에게 → yourselves예요."],
+     ["a","그 고양이는 거울 속 자기 자신을 보고 있다.","The cat is looking at itself in the mirror.","The cat(it) → itself예요."]]},
+ {h:"재귀 용법 (생략 불가)",lv:1,
+  c:["주어와 목적어가 <b>같은 대상</b>이면 목적어 자리에 재귀대명사","He looked at <b>himself</b>. (자기 자신) ↔ He looked at <b>him</b>. (다른 남자)","이때는 빼면 문장이 안 돼요"],
+  ex:[["She drew <span class=mark>herself</span>.","그녀는 자기 자신을 그렸다."],["Don't hurt <span class=mark>yourself</span>.","다치지 않게 조심해."]],
+  q:[["b","The artist painted a portrait of ___ in front of a mirror. (그녀 자신)","herself","그녀가 자기 자신을 그렸으니 herself예요."],
+     ["b","My little brother can't dress ___ yet.","himself","동생이 스스로 옷을 입는 것 → himself예요."],
+     ["b","Tom looked at ___ in the window. (Tom 자신)","himself","주어 Tom과 같은 사람 → himself예요."],
+     ["a","그는 거울 속 자기 자신을 보며 미소 지었다.","He smiled at himself in the mirror.","주어와 같은 사람이니 himself예요."]]},
+ {h:"강조 용법 (생략 가능)",lv:2,
+  c:["'직접, 스스로'를 강조: 강조할 말 바로 뒤나 문장 끝","I made it <b>myself</b>. = I <b>myself</b> made it.","빼도 문장이 성립해요 (재귀 용법과 구별)"],
+  ex:[["The museum <span class=mark>itself</span> is art.","박물관 그 자체가 예술이다."],["Did you cook this <span class=mark>yourself</span>?","이거 네가 직접 요리했니?"]],
+  q:[["b","The museum ___ is a work of art. (박물관 그 자체)","itself","강조 용법 → itself예요."],
+     ["b","Did you draw this picture ___? (너 스스로)","yourself","너 한 명이 직접 → yourself예요."],
+     ["b","The singer ___ wrote all of these songs. (그녀가 직접)","herself","주어 강조 → herself예요."],
+     ["a","나는 이 케이크를 직접 만들었다.","I made this cake myself.","강조 용법은 문장 끝에 올 수 있어요."]]},
+ {h:"재귀대명사 관용 표현",lv:3,
+  c:["<b>by oneself</b> 혼자서 · <b>for oneself</b> 스스로(남의 도움 없이)","<b>enjoy oneself</b> 즐겁게 보내다 · <b>help oneself to</b> ~을 마음껏 먹다","<b>make oneself at home</b> 편히 쉬다 · <b>talk to oneself</b> 혼잣말하다 · <b>in itself</b> 그 자체로"],
+  ex:[["She lives <span class=mark>by herself</span>.","그녀는 혼자 산다."],["Make <span class=mark>yourself</span> at home.","편히 계세요."]],
+  q:[["b","Please make ___ at home. (너 한 명)","yourself","make oneself at home = 편히 쉬다예요."],
+     ["b","He often talks to ___ when he is nervous.","himself","talk to oneself = 혼잣말하다예요."],
+     ["b","The girl completed the sculpture by ___.","herself","by oneself = 혼자서예요."],
+     ["a","너희들 스스로 그 답을 찾아라.","Find the answer for yourselves.","for oneself = 스스로, 여러 명이라 yourselves예요."]]}]},
+
+{id:"t10",u:5,name:"to부정사 (부사적 용법)",p:[
+ {h:"목적: ~하기 위해",lv:1,
+  c:["<b>to + 동사원형</b> = ~하기 위해","= <b>in order to</b> = <b>so as to</b>"],
+  ex:[["I went to the gallery <span class=mark>to see</span> his works.","나는 그의 작품을 보기 위해 미술관에 갔다."],["She saves money <span class=mark>in order to</span> travel.","그녀는 여행하기 위해 돈을 모은다."]],
+  q:[["b","Many people visit this gallery ___ the famous paintings. (see)","to see","'보기 위해' → 목적 to see예요."],
+     ["b","She studied art in Paris in order ___ a painter. (become)","to become","in order to + 동사원형이에요."],
+     ["b","I went closer ___ at the work more carefully. (look)","to look","'보기 위해' → to look이에요."],
+     ["a","나는 사진을 찍기 위해 카메라를 가져왔다.","I brought my camera to take pictures.","목적의 to take예요."]]},
+ {h:"감정의 원인: ~해서",lv:1,
+  c:["감정 형용사 + to부정사: <b>happy, glad, sad, sorry, surprised, disappointed, excited</b>","I was surprised <b>to hear</b> the news. (소식을 듣고 놀랐다)"],
+  ex:[["He was sad <span class=mark>to lose</span> the game.","그는 경기에 져서 슬펐다."],["I'm glad <span class=mark>to meet</span> you.","만나서 반가워."]],
+  q:[["b","I was very disappointed ___ that the exhibition was over. (hear)","to hear","들어서 실망했다 → to hear예요."],
+     ["b","We were excited ___ the famous artist. (meet)","to meet","만나서 신났다 → to meet이에요."],
+     ["b","I'm sorry ___ you waiting. (keep)","to keep","기다리게 해서 미안하다 → to keep이에요."],
+     ["a","그녀는 미술 대회에서 우승해서 매우 기뻤다.","She was very happy to win the art contest.","감정 형용사 + to부정사예요."]]},
+ {h:"판단의 근거 · 결과",lv:2,
+  c:["판단의 근거 (~하다니): He <b>must be</b> smart <b>to solve</b> it.","결과 (~해서 결국 …하다): She <b>grew up to be</b> a painter. / He <b>lived to be</b> 100."],
+  ex:[["She must be brave <span class=mark>to say</span> that.","그런 말을 하다니 그녀는 용감한 게 틀림없다."],["He grew up <span class=mark>to be</span> an actor.","그는 자라서 배우가 되었다."]],
+  q:[["b","He must be smart ___ such a difficult problem. (solve)","to solve","그런 문제를 풀다니 → 판단의 근거예요."],
+     ["b","The little girl grew up ___ a famous designer. (be)","to be","grew up to be = 자라서 ~이 되었다예요."],
+     ["b","My great-grandmother lived ___ 100 years old. (be)","to be","lived to be = ~살까지 살았다 (결과)예요."],
+     ["a","그런 말을 하다니 그는 어리석은 게 틀림없다.","He must be foolish to say such a thing.","must be + 형용사 + to부정사(근거)예요."]]},
+ {h:"형용사 수식 · too ~ to · enough to",lv:3,
+  c:["형용사 + to부정사: easy <b>to read</b>, hard <b>to understand</b>","<b>too + 형용사 + to</b> 너무 ~해서 …할 수 없다 = so ~ that + 주어 + can't","<b>형용사 + enough to</b> ~할 만큼 충분히 … (enough는 형용사 뒤!)"],
+  ex:[["The box is <span class=mark>too heavy to</span> lift.","그 상자는 너무 무거워서 들 수 없다."],["He is <span class=mark>tall enough to</span> reach it.","그는 그것에 닿을 만큼 키가 크다."]],
+  q:[["b","This book is easy ___. (read)","to read","형용사 easy를 꾸미는 to read예요."],
+     ["b","The painting was ___ expensive to buy. (너무)","too","too + 형용사 + to = 너무 ~해서 …할 수 없다예요."],
+     ["b","She is old ___ to watch the movie alone. (충분히)","enough","형용사 + enough to예요."],
+     ["a","그 상자는 너무 무거워서 들 수 없었다.","The box was too heavy to lift.","too + 형용사 + to부정사예요."]]}]},
+
+{id:"t11",u:6,name:"감각동사 + 형용사",p:[
+ {h:"감각동사 + 형용사",lv:1,
+  c:["<b>look</b> ~해 보이다 · <b>sound</b> ~하게 들리다 · <b>smell</b> ~한 냄새가 나다 · <b>taste</b> ~한 맛이 나다 · <b>feel</b> ~하게 느껴지다","뒤에는 <b>형용사</b> (부사 X): look happy (happily X)"],
+  ex:[["The soup tastes <span class=mark>salty</span>.","그 수프는 짠맛이 난다."],["You look <span class=mark>tired</span>.","너 피곤해 보여."]],
+  q:[["b","The traditional mask looks ___ at first. (scary / scarily)","scary","look 뒤에는 형용사 scary예요."],
+     ["b","This kimchi tastes a little ___. (sour / sourly)","sour","taste 뒤에는 형용사 sour예요."],
+     ["b","The silk felt very ___ on my skin. (soft / softly)","soft","feel 뒤에는 형용사 soft예요."],
+     ["a","이 떡은 맛있는 냄새가 나고 아주 달콤한 맛이 난다.","This rice cake smells delicious and tastes very sweet.","smell, taste 뒤 모두 형용사예요."]]},
+ {h:"감각동사 + like + 명사",lv:1,
+  c:["뒤에 <b>명사</b>가 오면 <b>like</b>를 붙여요","look like ~처럼 보이다 · sound like ~처럼 들리다 · smell like ~ 같은 냄새가 나다 · taste like ~ 같은 맛이 나다"],
+  ex:[["That cloud looks <span class=mark>like</span> a whale.","저 구름은 고래처럼 보인다."],["It sounds <span class=mark>like</span> a good plan.","좋은 계획인 것 같다."]],
+  q:[["b","The roof of the hanok looks ___ a bird's wings.","like","뒤에 명사가 오니 look like예요."],
+     ["b","This candy tastes ___ strawberries.","like","명사 strawberries 앞이라 taste like예요."],
+     ["b","It smells ___ rain outside.","like","명사 rain 앞이라 smell like예요."],
+     ["a","그 탈은 화난 남자의 얼굴처럼 보인다.","The mask looks like an angry man's face.","명사 앞이라 looks like예요."]]},
+ {h:"헷갈리는 형용사와 부사",lv:2,
+  c:["-ly로 끝나지만 <b>형용사</b>: friendly, lovely, lonely, lively","good(형용사) ↔ well(부사) → sounds <b>good</b> (well X)","형용사 앞에는 부사가 올 수 있어요: sounds <b>really</b> good"],
+  ex:[["She looks <span class=mark>friendly</span>.","그녀는 친절해 보인다."],["The plan sounds <span class=mark>really good</span>.","그 계획은 정말 좋게 들린다."]],
+  q:[["b","The new teacher looks ___. (friend의 형용사)","friendly","friendly는 -ly로 끝나는 형용사예요."],
+     ["b","Your idea sounds ___! Let's try it. (wonderful / wonderfully)","wonderful","sound 뒤 형용사 wonderful이에요."],
+     ["b","The soup smells ___. (good / well)","good","smell 뒤 형용사 good이에요."],
+     ["a","그 국악 공연은 정말 아름답게 들렸다.","The traditional music performance sounded really beautiful.","really(부사)가 형용사 beautiful을 꾸며요."]]},
+ {h:"그 밖의 2형식 동사",lv:3,
+  c:["<b>become / get / turn / grow + 형용사</b> ~이 되다, ~해지다","<b>seem + 형용사</b> ~인 것 같다","<b>keep / stay / remain + 형용사</b> ~인 상태로 있다","<b>get + 비교급 and 비교급</b> 점점 더 ~해지다"],
+  ex:[["The sky turned <span class=mark>dark</span>.","하늘이 어두워졌다."],["Stay <span class=mark>calm</span>.","침착하게 있어라."]],
+  q:[["b","The leaves turn ___ in fall. (red / redly)","red","turn + 형용사 = ~해지다예요."],
+     ["b","Please stay ___ during the performance. (quiet / quietly)","quiet","stay + 형용사 = ~인 상태로 있다예요."],
+     ["b","He seems ___ today. (happy / happily)","happy","seem + 형용사예요."],
+     ["a","날씨가 점점 추워지고 있다.","The weather is getting colder and colder.","get + 비교급 and 비교급 = 점점 더 ~해지다예요."]]}]},
+
+{id:"t12",u:6,name:"because",p:[
+ {h:"because + 주어 + 동사",lv:1,
+  c:["<b>because + 주어 + 동사</b>: ~ 때문에 (이유)","순서: 결과 + because + 이유 / Because + 이유, 결과","이유 앞엔 because, <b>결과 앞엔 so</b>"],
+  ex:[["I stayed home <span class=mark>because</span> I was sick.","나는 아파서 집에 있었다."],["I was sick, <span class=mark>so</span> I stayed home.","나는 아팠다, 그래서 집에 있었다."]],
+  q:[["b","Many tourists visit Jeonju ___ it is famous for bibimbap.","because","뒤에 이유(주어 + 동사) → because예요."],
+     ["b","I couldn't sleep ___ I drank too much coffee.","because","커피를 많이 마신 것이 이유예요."],
+     ["b","She was nervous, ___ she practiced her speech many times.","so","긴장(원인) → 연습(결과) → so예요."],
+     ["a","그는 그 축제가 재미있어서 다시 방문하고 싶어 한다.","He wants to visit the festival again because it was fun.","결과 + because + 이유 순서예요."]]},
+ {h:"because of + 명사",lv:1,
+  c:["<b>because of + 명사(구)</b>: ~ 때문에","because of the rain (O) / because the rain (X) / because it rained (O)"],
+  ex:[["The game stopped <span class=mark>because of</span> the rain.","비 때문에 경기가 멈췄다."]],
+  q:[["b","We couldn't go hiking ___ the heavy rain.","because of","뒤에 명사구 → because of예요."],
+     ["b","___ the traffic jam, we arrived late.","because of","명사구 the traffic jam 앞 → Because of예요."],
+     ["b","The game was canceled because ___ the storm.","of","명사 앞이라 because of예요."],
+     ["a","그녀는 감기 때문에 학교에 가지 않았다.","She didn't go to school because of a cold.","명사 a cold 앞이라 because of예요."]]},
+ {h:"since · as · so ~ that",lv:2,
+  c:["<b>since, as</b>도 '~ 때문에'라는 뜻으로 쓸 수 있어요","<b>so + 형용사/부사 + that ~</b>: 너무 ~해서 …하다","so ~ that + 주어 + can't = too ~ to (너무 ~해서 …할 수 없다)"],
+  ex:[["<span class=mark>Since</span> it was late, we took a taxi.","늦었기 때문에 우리는 택시를 탔다."],["It was <span class=mark>so</span> hot <span class=mark>that</span> we swam.","너무 더워서 우리는 수영했다."]],
+  q:[["b","___ it was a holiday, the palace was crowded. (~이기 때문에, s로 시작)",["since"],"since = because예요."],
+     ["b","The food was ___ spicy that I couldn't eat it.","so","so + 형용사 + that = 너무 ~해서 …하다예요."],
+     ["b","He ran so fast ___ nobody could catch him.","that","so ~ that 짝이에요."],
+     ["a","그 경치가 너무 아름다워서 우리는 사진을 많이 찍었다.","The view was so beautiful that we took many pictures.","so + 형용사 + that + 주어 + 동사예요."]]},
+ {h:"Why · That's why · That's because",lv:3,
+  c:["Why ~? — <b>Because</b> ~","<b>That's why + 결과</b>: 그래서 ~하다 (앞 문장이 이유)","<b>That's because + 이유</b>: 그건 ~ 때문이다 (앞 문장이 결과)"],
+  ex:[["I missed the bus. <span class=mark>That's why</span> I was late.","버스를 놓쳤다. 그래서 늦었다."],["I was late. <span class=mark>That's because</span> I missed the bus.","늦었다. 그건 버스를 놓쳤기 때문이다."]],
+  q:[["b","I missed the bus. That's ___ I was late.","why","뒤에 결과(늦음)가 오니 That's why예요."],
+     ["b","I was late. That's ___ I missed the bus.","because","뒤에 이유(버스 놓침)가 오니 That's because예요."],
+     ["b","A: ___ do you like Korean food? B: Because it's healthy.","why","Because로 답하니 이유를 묻는 Why예요."],
+     ["a","그것이 내가 한복을 좋아하는 이유이다.","That's why I like hanbok.","That's why + 결과예요."]]}]},
+
+{id:"t13",u:7,name:"목적어 + 보어",p:[
+ {h:"make / keep + 목적어 + 형용사",lv:1,
+  c:["<b>make + 목적어 + 형용사</b> ~을 …하게 만들다","<b>keep + 목적어 + 형용사</b> ~을 …하게 유지하다","보어 자리에 부사 X: keep it <b>clean</b> (cleanly X)","목적어 자리 대명사는 목적격: made <b>us</b> sad (we X)"],
+  ex:[["Plastic makes the ocean <span class=mark>dirty</span>.","플라스틱은 바다를 더럽게 만든다."],["Trees keep the air <span class=mark>fresh</span>.","나무는 공기를 신선하게 유지한다."]],
+  q:[["b","Using too much plastic makes our oceans ___. (dirty / dirtily)","dirty","목적어 상태 → 형용사 dirty예요."],
+     ["b","Planting trees will keep the air ___. (clean / cleanly)","clean","keep + 목적어 + 형용사예요."],
+     ["b","The news made ___ worried. (우리를)","us","목적어 자리 → 목적격 us예요."],
+     ["a","우리는 해변을 깨끗하게 유지하기 위해 쓰레기를 주웠다.","We picked up trash to keep the beach clean.","keep + the beach + clean이에요."]]},
+ {h:"find / leave / call + 목적어 + 보어",lv:1,
+  c:["<b>find + 목적어 + 형용사</b> ~이 …하다고 생각하다(알게 되다)","<b>leave + 목적어 + 형용사</b> ~을 …한 상태로 두다","<b>call / name + 목적어 + 명사</b> ~을 …라고 부르다/이름 짓다"],
+  ex:[["I found the book <span class=mark>interesting</span>.","나는 그 책이 재미있다는 것을 알았다."],["We call him <span class=mark>Eco King</span>.","우리는 그를 에코킹이라고 부른다."]],
+  q:[["b","I found the documentary about climate change very ___. (interest)","interesting","다큐멘터리가 흥미를 주는 쪽 → interesting이에요."],
+     ["b","Please leave the door ___. (open / openly)","open","leave + 목적어 + 형용사예요."],
+     ["b","We call ___ 'Eco Hero' because he always recycles. (그를)","him","call 뒤 목적어 자리 → him이에요."],
+     ["a","사람들은 그 숲을 지구의 허파라고 부른다.","People call the forest the lungs of the earth.","call + 목적어 + 명사예요."]]},
+ {h:"사역동사 + 목적어 + 동사원형",lv:2,
+  c:["<b>make / have / let + 목적어 + 동사원형</b>: ~가 …하게 하다","make 시키다(강제) · have 하게 하다 · let 허락하다","<b>help + 목적어 + (to) 동사원형</b>: 둘 다 가능"],
+  ex:[["Mom made me <span class=mark>clean</span> my room.","엄마는 내가 방을 청소하게 하셨다."],["Let me <span class=mark>help</span> you.","내가 도와줄게."]],
+  q:[["b","My mom made me ___ my room. (clean)","clean","사역동사 make + 목적어 + 동사원형이에요."],
+     ["b","Our teacher let us ___ home early. (go)","go","let + 목적어 + 동사원형이에요."],
+     ["b","Can you help me ___ these bottles? (sort)",["sort","to sort"],"help + 목적어 + (to) 동사원형 둘 다 돼요."],
+     ["a","그 선생님은 우리가 쓰레기를 분리하게 하셨다.","The teacher had us separate the trash.","have + 목적어 + 동사원형이에요."]]},
+ {h:"지각동사 · 목적어 + to부정사",lv:3,
+  c:["<b>see / watch / hear / feel + 목적어 + 동사원형 / -ing</b>: ~가 …하는 것을 보다/듣다","<b>want / ask / tell / expect / allow + 목적어 + to부정사</b>","주의: make는 동사원형, want는 to부정사"],
+  ex:[["I heard him <span class=mark>sing</span>.","나는 그가 노래하는 것을 들었다."],["She wants me <span class=mark>to recycle</span>.","그녀는 내가 재활용하기를 원한다."]],
+  q:[["b","I saw the ice ___ in the sun. (melt)",["melt","melting"],"지각동사 see + 목적어 + 동사원형/-ing예요."],
+     ["b","The scientist wants people ___ less plastic. (use)","to use","want + 목적어 + to부정사예요."],
+     ["b","We heard the birds ___ in the forest. (sing)",["sing","singing"],"지각동사 hear + 목적어 + 동사원형/-ing예요."],
+     ["a","그녀는 나에게 재활용 캠페인에 참여해 달라고 부탁했다.","She asked me to take part in the recycling campaign.","ask + 목적어 + to부정사예요."]]}]},
+
+{id:"t14",u:7,name:"접속사 that",p:[
+ {h:"목적어절 that",lv:1,
+  c:["<b>think / know / believe / hope / say / learn + that + 주어 + 동사</b>","that 이하가 '~라는 것'이라는 목적어","that절 안에서도 주어-동사 수일치"],
+  ex:[["I think <span class=mark>that</span> we should save water.","나는 우리가 물을 아껴야 한다고 생각한다."]],
+  q:[["b","Scientists say ___ the earth's temperature is rising.","that","say + that절이에요."],
+     ["b","I hope ___ more people will take part in the campaign.","that","hope + that절이에요."],
+     ["b","Many people don't know that plastic ___ hundreds of years to break down. (take)","takes","that절 주어 plastic은 단수 → takes예요."],
+     ["a","나는 작은 행동들이 세상을 바꿀 수 있다고 믿는다.","I believe that small actions can change the world.","believe + that + 주어 + 동사예요."]]},
+ {h:"that 생략과 시제 일치",lv:1,
+  c:["목적어 자리 that은 <b>생략</b> 가능: I think (that) he is right.","주절이 과거면 that절도 보통 <b>과거</b>: I thought that he <b>was</b> busy.","예외: 변하지 않는 사실은 현재 그대로"],
+  ex:[["She said that she <span class=mark>was</span> tired.","그녀는 피곤하다고 말했다."],["We learned that water <span class=mark>boils</span> at 100°C.","우리는 물이 100°C에서 끓는다는 것을 배웠다."]],
+  q:[["b","I thought that he ___ a student. (be)","was","주절 thought(과거) → that절도 과거 was예요."],
+     ["b","He knew that I ___ the truth. (tell, 과거)","told","과거에 맞춰 told예요."],
+     ["b","Our teacher said that the earth ___ around the sun. (go)","goes","변하지 않는 사실은 현재 goes예요."],
+     ["a","그들은 재활용이 환경을 보호한다는 것을 배웠다.","They learned that recycling protects the environment.","사실이므로 현재 protects예요."]]},
+ {h:"주어·보어 that절과 가주어 It",lv:2,
+  c:["주어 that절은 보통 <b>It ~ that</b>으로: <b>It</b> is true <b>that</b> ~","보어 that절: The problem is <b>that</b> ~"],
+  ex:[["<span class=mark>It</span> is clear <span class=mark>that</span> we need trees.","우리에게 나무가 필요하다는 것은 분명하다."],["The problem is <span class=mark>that</span> we waste food.","문제는 우리가 음식을 낭비한다는 것이다."]],
+  q:[["b","It is true ___ we waste too many resources.","that","It(가주어) ~ that절(진주어)이에요."],
+     ["b","The problem is ___ people use too many plastic bags.","that","보어 자리 that절이에요."],
+     ["b","___ is surprising that the ice is melting so fast.","it","that절을 대신하는 가주어 It이에요."],
+     ["a","우리가 에너지를 아껴야 한다는 것은 분명하다.","It is clear that we have to save energy.","It ~ that 구조예요."]]},
+ {h:"that vs what · 동격 that",lv:3,
+  c:["<b>that</b> 뒤는 <b>완전한 문장</b>: I believe that he is honest.","<b>what</b>(~하는 것) 뒤는 <b>불완전한 문장</b>(목적어나 주어가 빠짐): I believe what he said.","동격 that: <b>the fact / news / idea that</b> ~ (~라는 사실/소식/생각)"],
+  ex:[["This is <span class=mark>what</span> I need.","이것이 내가 필요한 것이다."],["The news <span class=mark>that</span> he won surprised us.","그가 이겼다는 소식이 우리를 놀라게 했다."]],
+  q:[["b","I can't believe ___ you said. (that / what)","what","said의 목적어가 빠진 불완전한 문장 → what이에요."],
+     ["b","I can't believe ___ you won the prize. (that / what)","that","you won the prize는 완전한 문장 → that이에요."],
+     ["b","The news ___ the polar bears are in danger made us sad.","that","the news = 그 뒤 내용 → 동격 that이에요."],
+     ["a","이것이 내가 원했던 것이다.","This is what I wanted.","what = ~하는 것, wanted의 목적어가 빠져 있어요."]]}]},
+
+{id:"t15",u:8,name:"감탄문",p:[
+ {h:"What 감탄문",lv:1,
+  c:["<b>What + a/an + 형용사 + 명사 + (주어 + 동사)!</b>","복수명사 앞에는 a/an 없이: What <b>brave girls</b> they are!","모음 소리 앞은 <b>an</b>: What <b>an</b> amazing story!"],
+  ex:[["<span class=mark>What</span> a cute cat it is!","정말 귀여운 고양이구나!"],["<span class=mark>What</span> tall trees they are!","정말 키 큰 나무들이구나!"]],
+  q:[["b","What ___ amazing adventure he had!","an","amazing은 모음 소리로 시작 → an이에요."],
+     ["b","___ brave girls they are!","what","명사 girls가 있으니 What, 복수라 a 없음이에요."],
+     ["b","What a strange story it ___! (be, 과거)","was","it + 과거 be동사 → was예요."],
+     ["a","그 주인공은 정말 용감한 소년이구나!","What a brave boy the main character is!","What + a + 형용사 + 명사 + 주어 + 동사예요."]]},
+ {h:"How 감탄문",lv:1,
+  c:["<b>How + 형용사/부사 + (주어 + 동사)!</b>","명사가 없으면 How, 있으면 What"],
+  ex:[["<span class=mark>How</span> fast he runs!","그는 정말 빨리 달리는구나!"],["<span class=mark>How</span> beautiful!","정말 아름답구나!"]],
+  q:[["b","___ exciting the ending of the story was!","how","exciting 뒤에 명사 없이 주어가 와요 → How예요."],
+     ["b","___ terrible the weather is today!","how","형용사 뒤 바로 주어 → How예요."],
+     ["b","How ___ the rabbit runs! (fast / fastly)","fast","fast는 부사도 fast예요. fastly라는 말은 없어요."],
+     ["a","그 왕자는 정말 빠르게 달렸구나!","How fast the prince ran!","How + 부사 + 주어 + 동사예요."]]},
+ {h:"평서문 → 감탄문 바꾸기",lv:2,
+  c:["She is a <b>very</b> kind girl. → <b>What a kind girl</b> she is!","It is <b>very</b> cold. → <b>How cold</b> it is!","very는 빼고, 주어 + 동사는 맨 뒤로","주어 + 동사는 생략 가능: What a nice day! / How cute!"],
+  ex:[["He is a very smart boy. → <span class=mark>What a smart boy</span> he is!",""],["The river is very long. → <span class=mark>How long</span> the river is!",""]],
+  q:[["b","He is a very funny boy. → ___ a funny boy he is!","what","명사 boy가 있으니 What이에요."],
+     ["b","The tower is very tall. → How ___ the tower is!","tall","very를 빼고 How + 형용사 tall이에요."],
+     ["b","They are very old stories. → What ___ stories they are!","old","복수명사라 a 없이 What old stories예요."],
+     ["a","정말 멋진 날이야!","What a wonderful day!","주어 + 동사를 생략한 감탄문이에요."]]},
+ {h:"셀 수 없는 명사 · 감탄문 vs 의문문",lv:3,
+  c:["셀 수 없는 명사 앞에는 a 없이: <b>What nice weather!</b> / <b>What good advice!</b>","How 의문문: How old <b>is she</b>? (동사 + 주어)","How 감탄문: How old <b>she is</b>! (주어 + 동사)"],
+  ex:[["<span class=mark>What</span> great news!","정말 좋은 소식이구나! (a great news X)"],["How tall <span class=mark>he is</span>!","그는 정말 키가 크구나!"]],
+  q:[["b","___ nice weather it is!","what","명사 weather가 있으니 What, 셀 수 없어서 a 없음이에요."],
+     ["b","How kind ___ is! (그녀)","she","감탄문은 How + 형용사 + 주어 + 동사 → she is예요."],
+     ["b","How old ___! (그는 정말 나이가 많구나 - 두 단어)","he is","감탄문 어순은 주어 + 동사 → he is예요. is he는 의문문이에요."],
+     ["a","정말 좋은 조언이구나!","What good advice!","advice는 셀 수 없어서 a 없이 What good advice예요."]]}]},
+
+{id:"t16",u:8,name:"-thing + 형용사",p:[
+ {h:"-thing / -one / -body + 형용사",lv:1,
+  c:["-thing, -one, -body로 끝나는 말은 <b>형용사가 뒤에서</b> 꾸며요","something <b>new</b> (new something X), someone <b>kind</b>"],
+  ex:[["I want <span class=mark>something sweet</span>.","나는 달콤한 무언가를 원한다."],["She is <span class=mark>someone special</span>.","그녀는 특별한 사람이다."]],
+  q:[["b","Did anything ___ happen at school today? (special / specially)","special","anything 뒤 형용사 special이에요."],
+     ["b","There was nothing ___ in the old box. (interest)","interesting","nothing 뒤 형용사 interesting이에요."],
+     ["b","I want to meet ___ who can understand me. (누군가)",["someone","somebody"],"사람은 someone / somebody예요."],
+     ["a","그 이야기에는 새로운 것이 아무것도 없었다.","There was nothing new in the story.","nothing + 형용사 new예요."]]},
+ {h:"some- / any- / no-",lv:1,
+  c:["긍정문: <b>something</b> · 부정문·의문문: <b>anything</b>","<b>nothing</b> = not ~ anything (아무것도 ~ 않다)","권유·부탁 의문문은 something: Would you like <b>something</b> to drink?"],
+  ex:[["I didn't eat <span class=mark>anything</span>.","나는 아무것도 먹지 않았다."],["I ate <span class=mark>nothing</span>.","나는 아무것도 먹지 않았다."]],
+  q:[["b","I didn't see ___ strange last night.","anything","부정문 → anything이에요."],
+     ["b","Would you like ___ to drink?","something","권유 의문문은 something이에요."],
+     ["b","There is ___ wrong with this computer. It works well. (아무것도 ~ 아니다)","nothing","nothing = 아무것도 ~ 아니다예요."],
+     ["a","그 상자 안에는 아무것도 없었다.","There was nothing in the box.","nothing = 아무것도 없음이에요."]]},
+ {h:"-thing + 형용사 + to부정사",lv:2,
+  c:["순서: <b>-thing + 형용사 + to부정사</b>","something <b>cold to drink</b> 마실 차가운 것","something <b>to write with</b> 가지고 쓸 것"],
+  ex:[["I need <span class=mark>something warm to wear</span>.","나는 입을 따뜻한 무언가가 필요하다."]],
+  q:[["b","I'm hungry. I need ___ to eat. (따뜻한 무언가 - 두 단어)","something warm","-thing + 형용사 + to부정사 순서예요."],
+     ["b","Is there anything ___ to drink? (cold)","cold","anything + 형용사 + to부정사예요."],
+     ["b","Give me something ___ with. (write)","to write","가지고 쓸 것 → something to write with예요."],
+     ["a","나는 그에게 말할 중요한 무언가가 있다.","I have something important to tell him.","-thing + 형용사 + to부정사예요."]]},
+ {h:"to부정사의 형용사적 용법",lv:3,
+  c:["<b>명사 + to부정사</b>: ~할 (명사) → a book <b>to read</b>, time <b>to sleep</b>","전치사가 필요한 경우: a chair <b>to sit on</b>, a friend <b>to talk with</b>, a pen <b>to write with</b>, a house <b>to live in</b>","전치사를 빠뜨리면 틀린 문장이에요"],
+  ex:[["I have a lot of homework <span class=mark>to do</span>.","나는 해야 할 숙제가 많다."],["We need a place <span class=mark>to stay in</span>.","우리는 머물 곳이 필요하다."]],
+  q:[["b","I need a chair to sit ___.","on","sit on a chair → a chair to sit on이에요."],
+     ["b","She has no friends to play ___.","with","play with friends → friends to play with예요."],
+     ["b","It's time ___ to bed. (go)","to go","time to go = 갈 시간이에요."],
+     ["a","그는 함께 이야기할 친구가 필요했다.","He needed a friend to talk with.","talk with a friend → a friend to talk with예요."]]}]}
+];
+
+/* 레벨 테스트: 주제마다 1문항 (16문항) */
+const TEST=[
+ {t:"t1",q:["b","The books on the shelf ___ my father's.","are","주어는 shelf가 아니라 The books(복수) → are"]},
+ {t:"t2",q:["b","My grandmother ___ a walk every morning. (take)","takes","3인칭 단수 현재 → takes"]},
+ {t:"t3",q:["b","Listen! Someone ___ at the door. (knock)","is knocking","지금 진행 중 → is knocking"]},
+ {t:"t4",q:["b","I enjoy ___ new recipes on weekends. (try)","trying","enjoy + 동명사"]},
+ {t:"t5",q:["b","We ___ a lot of pictures during the trip. (take)","took","take의 과거형 took"]},
+ {t:"t6",q:["b","Turn off the light, ___ you can't sleep well. (그렇지 않으면)","or","명령문, or = 그렇지 않으면"]},
+ {t:"t7",q:["b","It is not easy ___ a new language. (learn)","to learn","It(가주어) ~ to부정사(진주어)"]},
+ {t:"t8",q:["b","You don't ___ to bring your lunch tomorrow. (~할 필요가 없다)","have","don't have to = ~할 필요가 없다"]},
+ {t:"t9",q:["b","She introduced ___ to the class. (그녀 자신)","herself","주어와 목적어가 같은 사람 → herself"]},
+ {t:"t10",q:["b","He went to the library ___ some books. (borrow)","to borrow","목적: ~하기 위해 → to borrow"]},
+ {t:"t11",q:["b","Your plan sounds ___. (perfect / perfectly)","perfect","감각동사 + 형용사"]},
+ {t:"t12",q:["b","The flight was delayed ___ the storm.","because of","명사구 앞 → because of"]},
+ {t:"t13",q:["b","The warm blanket kept me ___. (warm / warmly)","warm","keep + 목적어 + 형용사"]},
+ {t:"t14",q:["b","I didn't know ___ she was from Brazil.","that","know + that절"]},
+ {t:"t15",q:["b","___ a beautiful sunset it is!","what","명사(a beautiful sunset)가 있으면 What"]},
+ {t:"t16",q:["b","Let's find something ___ to do this weekend. (fun)","fun","-thing + 형용사 + to부정사"]}
+];
+
+/* ---------- 저장 ---------- */
+const KEY="grammar-step-v3";
+const fresh=()=>({placed:false,allOpen:false,rec:[],done:{},wrong:{},streak:0,last:null,days:[]});
+let S;
+function load(){try{S=Object.assign(fresh(),JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){S=fresh()}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+/* 자동 저장이 되는 환경인지 확인 */
+const STORE_OK=(()=>{try{const k="__t";localStorage.setItem(k,"1");const ok=localStorage.getItem(k)==="1";localStorage.removeItem(k);return ok}catch(e){return false}})();
+const hasProgress=()=>S.placed||Object.keys(S.done).length>0||S.days.length>0;
+
+/* ---------- 진도 코드 (백업과 복원) ---------- */
+function makeCode(){
+  const j=JSON.stringify(S);
+  return "GS1-"+btoa(unescape(encodeURIComponent(j)));
+}
+function readCode(code){
+  const c=String(code).replace(/\s+/g,"");
+  if(!c.startsWith("GS1-"))throw new Error("form");
+  const o=JSON.parse(decodeURIComponent(escape(atob(c.slice(4)))));
+  if(!o||typeof o!=="object"||typeof o.done!=="object")throw new Error("shape");
+  return Object.assign(fresh(),o);
+}
+function backupBox(id){
+  return `<section class="card backup" id="${id}"><h2>진도 코드</h2>
+    <p class="sub">${STORE_OK?"진도는 이 폰에 자동 저장돼요. 혹시 몰라 공부가 끝나면 진도 코드를 복사해서 카톡 '나와의 채팅' 같은 곳에 보관해 두세요.":"이 화면에서는 진도가 자동 저장되지 않을 수 있어요. 공부가 끝나면 꼭 진도 코드를 복사해서 카톡 '나와의 채팅' 같은 곳에 보관해 두세요."}</p>
+    <div class="row"><button class="btn" data-act="copy">진도 코드 복사</button><button class="btn ghost" data-act="open">진도 코드 불러오기</button></div>
+    <textarea class="code" readonly hidden aria-label="진도 코드"></textarea>
+    <p class="msg" hidden></p>
+    <div class="restore" hidden><textarea class="code in" placeholder="복사해 둔 진도 코드를 여기에 붙여넣으세요" aria-label="불러올 진도 코드"></textarea>
+    <button class="btn flame" data-act="load">이 코드로 불러오기</button></div></section>`;
+}
+function wireBackup(id){
+  const box=document.getElementById(id); if(!box)return;
+  const out=box.querySelector(".code[readonly]"), msg=box.querySelector(".msg"), rs=box.querySelector(".restore"), inp=box.querySelector(".code.in");
+  const say=t=>{msg.textContent=t;msg.hidden=false};
+  box.querySelector('[data-act="copy"]').onclick=()=>{
+    const code=makeCode(); out.value=code; out.hidden=false;
+    const fallback=()=>{out.focus();out.select();say("코드를 길게 눌러 복사해 주세요.")};
+    try{navigator.clipboard.writeText(code).then(()=>say("복사했어요! 카톡 '나와의 채팅'에 붙여넣어 보관하세요."),fallback)}catch(e){fallback()}
+  };
+  box.querySelector('[data-act="open"]').onclick=()=>{rs.hidden=!rs.hidden;if(!rs.hidden)inp.focus()};
+  box.querySelector('[data-act="load"]').onclick=()=>{
+    try{S=readCode(inp.value);save();home();
+      setTimeout(()=>{const t=document.getElementById("toast");if(t){t.hidden=false;setTimeout(()=>t.hidden=true,3000)}},50);
+    }catch(e){say("코드를 읽지 못했어요. GS1-로 시작하는 코드 전체를 빠짐없이 붙여넣었는지 확인해 주세요.")}
+  };
+}
+
+/* ---------- 날짜와 연속 학습일 ---------- */
+const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const today=()=>ymd(new Date());
+const daysAgo=n=>{const d=new Date();d.setDate(d.getDate()-n);return ymd(d)};
+function curStreak(){return (S.last===today()||S.last===daysAgo(1))?S.streak:0}
+function markStudied(){
+  const t=today(); if(S.last===t)return false;
+  S.streak=(S.last===daysAgo(1))?S.streak+1:1; S.last=t;
+  if(!S.days.includes(t))S.days.push(t); S.days=S.days.slice(-60); return true;
+}
+
+/* ---------- 도우미 ---------- */
+const $=s=>document.querySelector(s);
+const app=$("#app"), abar=$("#abar"), abarIn=$("#abar-in");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm=s=>String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g," ").trim().replace(/[.!?]+$/,"");
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const LV={1:["l1","기본"],2:["l2","중2"],3:["l3","중3"]};
+const lvTag=n=>`<span class="lv ${LV[n][0]}">${LV[n][1]}</span>`;
+const ICON={
+ flame:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1 3.5 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5.2 1.6 1 2.6 2 3 0-3.5 1-6.5 1-9.5z"/></svg>',
+ check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+ lock:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V8a3 3 0 0 0-6 0z"/></svg>',
+ star:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>',
+ x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>'
+};
+const topicOf=id=>TOPICS.find(x=>x.id===id);
+const partKey=(tp,pi)=>tp.id+"."+pi;
+const partsDone=tp=>tp.p.filter((_,i)=>S.done[partKey(tp,i)]).length;
+const topicDone=tp=>partsDone(tp)===tp.p.length;
+function qById(id){
+  const k=id.split(".");
+  if(k[0]==="test"){const t=TEST[+k[1]];return t?{q:t.q,t:topicOf(t.t),pi:null}:null}
+  const t=topicOf(k[0]); const p=t&&t.p[+k[1]]; const q=p&&p.q[+k[2]];
+  return q?{q,t,pi:+k[1]}:null;
+}
+const unitDone=u=>TOPICS.filter(t=>t.u===u).every(topicDone);
+const unitOpen=u=>S.placed&&(S.allOpen||u===1||unitDone(u-1));
+
+/* ---------- 홈 ---------- */
+function home(){
+  abar.hidden=true;
+  const st=curStreak(), studiedToday=S.last===today();
+  const labels=["일","월","화","수","목","금","토"];
+  let week="";
+  for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const k=ymd(d);const on=S.days.includes(k);
+    week+=`<div>${labels[d.getDay()]}<div class="dot ${on?"on":""} ${i===0?"today":""}">${on?ICON.check:""}</div></div>`}
+  const wrongN=Object.keys(S.wrong).length;
+  const recLeft=S.rec.filter(id=>!topicDone(topicOf(id)));
+  let nextId=recLeft[0]||null;
+  if(!nextId)for(const tp of TOPICS){if(unitOpen(tp.u)&&!topicDone(tp)){nextId=tp.id;break}}
+
+  let html=`<header class="top"><div class="brand">문법 한 걸음</div>
+    <span class="pill flame" aria-label="연속 학습 ${st}일">${ICON.flame}${st}</span></header>
+  <section class="streak"><div class="streak-head"><div class="streak-num">${st}일</div>
+    <p class="streak-msg">${studiedToday?"오늘 공부 완료! 내일도 이어가요.":st>0?"오늘 스텝 하나만 풀면 연속 기록이 이어져요.":"스텝 하나를 끝내면 연속 학습이 시작돼요."}</p></div>
+    <div class="week">${week}</div></section>`;
+
+  html+=`<div class="toast" id="toast" hidden role="status">진도를 불러왔어요!</div>`;
+  if(!STORE_OK){
+    html+=`<section class="card warn"><h2>자동 저장이 안 되는 화면이에요</h2><p class="sub">공부가 끝나면 맨 아래 '진도 코드 복사'로 기록을 보관해 주세요. 다음에 '진도 코드 불러오기'로 이어서 할 수 있어요.</p></section>`;
+  }
+  if(!hasProgress()){
+    html+=`<section class="card"><h2>전에 공부한 기록이 있나요?</h2><p class="sub">복사해 둔 진도 코드가 있으면 불러와서 이어서 할 수 있어요.</p><button class="btn ghost" id="bk-top">진도 코드 불러오기</button></section>`;
+  }
+  if(!S.placed){
+    html+=`<section class="card"><h2>먼저 레벨 테스트를 볼까요?</h2>
+      <p class="sub">문법 16개 주제를 한 문제씩 확인해요. 끝나면 틀린 문제와 해설을 보여주고, 모든 단원이 열려요. 틀린 주제는 주황색 '추천'으로 표시돼요.</p>
+      <div class="row"><button class="btn" id="go-test">레벨 테스트 시작</button><button class="btn ghost" id="skip-test">1단원부터 차례로</button></div></section>`;
+  }else if(recLeft.length){
+    html+=`<section class="card"><h2>추천 주제 ${recLeft.length}개</h2>
+      <p class="sub">레벨 테스트에서 틀린 주제예요: ${recLeft.map(id=>esc(topicOf(id).name)).join(", ")}</p>
+      <button class="btn flame" id="go-rec">추천 주제 공부하기</button></section>`;
+  }
+  if(wrongN>0){
+    html+=`<section class="card review-card"><div class="num">${wrongN}</div><div class="txt"><h2>오답 복습</h2>
+      <p class="sub">처음 시도에 맞히면 목록에서 빠져요.</p></div><button class="btn flame" id="go-review">복습</button></section>`;
+  }
+  html+=`<div class="path">`;
+  for(const u of UNITS){
+    const open=unitOpen(u.n);
+    html+=`<section class="unit ${open?"":"locked"}"><div class="unit-head"><span class="unit-no">${u.n}단원</span><span class="unit-title">${esc(u.title)}</span></div><div class="stops">`;
+    for(const tp of TOPICS.filter(x=>x.u===u.n)){
+      const done=topicDone(tp), n=partsDone(tp), rec=!done&&S.rec.includes(tp.id);
+      const cls=done?"done":rec?"rec":open?"":"locked";
+      const sub=done?"완료 · 다시 보기":!open?"앞 단원을 끝내면 열려요":(rec?"추천 · ":"")+"스텝 "+n+"/"+tp.p.length+" · 기본~중3";
+      html+=`<button class="stop ${cls} ${tp.id===nextId?"next":""}" data-t="${tp.id}" ${open?"":'aria-disabled="true"'}>
+        <span class="node">${done?ICON.check:open?ICON.star:ICON.lock}</span>
+        <span class="lbl"><b>${esc(tp.name)}</b><span>${sub}</span></span></button>`;
+    }
+    html+=`</div></section>`;
+  }
+  html+=`</div>${backupBox("bk-home")}<footer class="foot">${S.placed?'<button class="link" id="retest">레벨 테스트 다시 보기</button>':""}<button class="link" id="go-parent">보호자용: 전체 문제와 정답 보기</button></footer>`;
+  app.innerHTML=html;
+  window.scrollTo(0,0);
+  const b=id=>document.getElementById(id);
+  b("go-test")&&(b("go-test").onclick=startTest);
+  b("retest")&&(b("retest").onclick=startTest);
+  b("skip-test")&&(b("skip-test").onclick=()=>{S.placed=true;S.allOpen=false;save();home()});
+  b("go-rec")&&(b("go-rec").onclick=()=>topicPage(topicOf(recLeft[0])));
+  b("go-review")&&(b("go-review").onclick=startReview);
+  b("go-parent").onclick=parent;
+  wireBackup("bk-home");
+  b("bk-top")&&(b("bk-top").onclick=()=>document.getElementById("bk-home").scrollIntoView({block:"center"}));
+  app.querySelectorAll(".stop").forEach(el=>el.onclick=()=>{const tp=topicOf(el.dataset.t);if(unitOpen(tp.u))topicPage(tp)});
+}
+
+/* ---------- 주제 페이지: 스텝별 개념 + 문제 풀기 ---------- */
+function topicPage(tp,focus){
+  abar.hidden=true;
+  const nextPi=tp.p.findIndex((_,i)=>!S.done[partKey(tp,i)]);
+  let html=`<div class="lesson-top"><button class="x" id="close" aria-label="홈으로">${ICON.back}</button>
+    <div class="steps-mini" style="flex:1">${tp.p.map((_,i)=>`<i class="${S.done[partKey(tp,i)]?"on":""}"></i>`).join("")}</div></div>
+    <div class="topic-head"><span class="tag">${tp.u}단원 · ${esc(UNITS[tp.u-1].title)}</span><h1>${esc(tp.name)}</h1>
+    <p class="sub">개념을 읽고 스텝마다 ${tp.p[0].q.length}문제씩 풀어요. 기본부터 중3 개념까지 차례로 올라가요.</p></div>`;
+  tp.p.forEach((p,i)=>{
+    const done=S.done[partKey(tp,i)];
+    html+=`<section class="part ${i===nextPi?"next":""}" id="part${i}"><div class="part-top"><span class="part-no">스텝 ${i+1}</span>${lvTag(p.lv)}<h2>${esc(p.h)}</h2></div>
+      <ul>${p.c.map(x=>`<li>${x}</li>`).join("")}</ul>
+      <div class="ex">${p.ex.map(e=>`<div><span class="en">${e[0]}</span>${e[1]?`<span>${esc(e[1])}</span>`:""}</div>`).join("")}</div>
+      <button class="btn ${done?"done":""}" data-pi="${i}">${done?"완료 · 다시 풀기":"스텝 "+(i+1)+" 문제 풀기 ("+p.q.length+"문제)"}</button></section>`;
+  });
+  app.innerHTML=html;
+  $("#close").onclick=home;
+  app.querySelectorAll("[data-pi]").forEach(b=>b.onclick=()=>startLesson(tp,+b.dataset.pi));
+  const f=focus!=null?focus:(nextPi>0?nextPi:null);
+  if(f!=null&&document.getElementById("part"+f))document.getElementById("part"+f).scrollIntoView({block:"start"});
+  else window.scrollTo(0,0);
+}
+
+/* ---------- 세션 ---------- */
+let SS=null;
+const newSession=(mode,items,extra)=>Object.assign({mode,queue:items,total:items.length,doneN:0,firstTry:0,seen:{},missed:{},log:[]},extra||{});
+function startLesson(tp,pi){
+  const p=tp.p[pi];
+  SS=newSession("lesson",p.q.map((q,i)=>({id:tp.id+"."+pi+"."+i,no:i+1,q,tag:tp.name+" · 스텝 "+(pi+1)+" "+p.h})),{tp,pi});
+  next();
+}
+function startReview(){
+  const ids=shuffle(Object.keys(S.wrong).filter(id=>qById(id))).slice(0,10);
+  if(!ids.length){S.wrong={};save();home();return}
+  SS=newSession("review",ids.map((id,k)=>{const r=qById(id);return {id,no:k+1,q:r.q,tag:"오답 복습 · "+r.t.name}}));
+  next();
+}
+function startTest(){
+  SS=newSession("test",TEST.map((t,i)=>({id:"test."+i,no:i+1,q:t.q,t:t.t,tag:"레벨 테스트 · "+topicOf(t.t).u+"단원 "+topicOf(t.t).name})));
+  next();
+}
+function leave(){if(SS&&SS.mode==="lesson")topicPage(SS.tp,SS.pi);else home()}
+
+function next(){
+  if(!SS.queue.length){finish();return}
+  const it=SS.queue[0]; SS.cur=it; SS.picked=[]; SS.lock=false;
+  const pct=Math.round(SS.doneN/SS.total*100);
+  let body="";
+  if(it.q[0]==="b"){
+    const parts=esc(it.q[1]).split("___");
+    body=`<p class="q-guide">빈칸에 알맞은 말을 쓰세요</p>
+    <p class="sentence en">${parts[0]}<span class="blank">?</span>${parts[1]||""}</p>
+    <input class="answer-input" id="ans" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="여기에 입력">
+    <p class="note">두 단어 이상이 들어갈 수도 있어요.</p>`;
+  }else{
+    const {words}=splitSent(it.q[2]);
+    SS.bank=shuffleNotSame(words);
+    body=`<p class="q-guide">우리말에 맞게 단어를 배열하세요</p>
+    <p class="ko">${esc(it.q[1])}</p>
+    <div id="arrange" style="display:flex;flex-direction:column;gap:12px">
+      <div class="slot" id="slot" aria-label="내 답"></div>
+      <div class="bank" id="bank">${SS.bank.map((w,i)=>`<button class="chip" data-bi="${i}">${esc(w)}</button>`).join("")}</div>
+    </div>
+    <p class="note">단어를 눌러 넣고 빼거나, 끌어서 원하는 자리로 옮길 수 있어요.</p>`;
+  }
+  app.innerHTML=`<div class="lesson-top"><button class="x" id="close" aria-label="그만하기">${ICON.x}</button><div class="bar"><i style="width:${pct}%"></i></div></div>
+  <span class="tag ${SS.mode==="review"?"review":""}">${esc(it.tag)}</span><div class="pop" style="display:flex;flex-direction:column;gap:16px">${body}</div>`;
+  $("#close").onclick=leave;
+  showBar(`<button class="btn" id="check" disabled>확인</button>`);
+  const chk=$("#check");
+  if(it.q[0]==="b"){
+    const inp=$("#ans"); inp.oninput=()=>chk.disabled=!inp.value.trim();
+    inp.onkeydown=e=>{if(e.key==="Enter"&&inp.value.trim())check()};
+    setTimeout(()=>inp.focus(),50);
+  }else{
+    $("#arrange").addEventListener("pointerdown",dragDown);
+    renderArr(-1,0);
+  }
+  chk.onclick=check;
+  window.scrollTo(0,0);
+}
+function splitSent(s){const m=s.match(/^(.*?)([.!?])$/);const core=m?m[1]:s;return {words:core.split(" "),end:m?m[2]:""}}
+function shuffleNotSame(words){if(words.length<2)return words.slice();let r;do{r=shuffle(words)}while(r.join(" ")===words.join(" "));return r}
+
+/* ---------- 문장 배열: 누르기 + 끌어서 옮기기 ---------- */
+let D=null;
+function renderArr(ph,w){
+  const items=SS.picked.map(bi=>`<button class="chip" data-bi="${bi}">${esc(SS.bank[bi])}</button>`);
+  if(ph>=0)items.splice(ph,0,`<span class="chip ph" style="width:${w}px">&nbsp;</span>`);
+  $("#slot").innerHTML=items.join("");
+  $("#bank").querySelectorAll(".chip").forEach(c=>{const bi=+c.dataset.bi;c.classList.toggle("used",SS.picked.includes(bi)||(!!D&&D.moved&&D.bi===bi))});
+  $("#check").disabled=SS.picked.length===0;
+}
+function dragDown(e){
+  if(SS.lock||D)return;
+  const c=e.target.closest(".chip");
+  if(!c||c.classList.contains("used")||c.classList.contains("ph"))return;
+  e.preventDefault();
+  const r=c.getBoundingClientRect();
+  D={bi:+c.dataset.bi,from:c.closest("#slot")?"slot":"bank",x0:e.clientX,y0:e.clientY,dx:e.clientX-r.left,dy:e.clientY-r.top,w:r.width,moved:false,ph:-1,ghost:null,label:c.textContent,pid:e.pointerId};
+  window.addEventListener("pointermove",dragMove,{passive:false});
+  window.addEventListener("pointerup",dragUp);
+  window.addEventListener("pointercancel",dragUp);
+}
+function overSlot(e){const r=$("#slot").getBoundingClientRect();return e.clientY>=r.top-24&&e.clientY<=r.bottom+24&&e.clientX>=r.left-24&&e.clientX<=r.right+24}
+function insertIdx(e){
+  const cs=D.rects; // 자리표시 없이 잰 위치를 써서 줄바꿈 때문에 흔들리지 않게
+  for(let i=0;i<cs.length;i++){const r=cs[i];
+    if(e.clientY<r.top)return i;
+    if(e.clientY<=r.bottom&&e.clientX<r.left+r.width/2)return i;}
+  return cs.length;
+}
+function dragMove(e){
+  if(!D||e.pointerId!==D.pid)return;
+  if(!D.moved){
+    if(Math.hypot(e.clientX-D.x0,e.clientY-D.y0)<6)return;
+    D.moved=true;
+    if(D.from==="slot")SS.picked=SS.picked.filter(x=>x!==D.bi);
+    const g=document.createElement("div");g.className="chip ghost en";g.textContent=D.label;document.body.appendChild(g);D.ghost=g;
+    renderArr(-1,0);
+    D.rects=[...$("#slot").querySelectorAll(".chip")].map(c=>c.getBoundingClientRect());
+  }
+  e.preventDefault();
+  D.ghost.style.left=(e.clientX-D.dx)+"px"; D.ghost.style.top=(e.clientY-D.dy)+"px";
+  const idx=overSlot(e)?insertIdx(e):-1;
+  if(idx!==D.ph){D.ph=idx;renderArr(idx,D.w)}
+}
+function dragUp(e){
+  if(!D||e.pointerId!==D.pid)return;
+  window.removeEventListener("pointermove",dragMove);
+  window.removeEventListener("pointerup",dragUp);
+  window.removeEventListener("pointercancel",dragUp);
+  const d=D; D=null;
+  if(!d.moved){
+    if(d.from==="bank")SS.picked.push(d.bi); else SS.picked=SS.picked.filter(x=>x!==d.bi);
+  }else{
+    d.ghost.remove();
+    if(e.type!=="pointercancel"&&d.ph>=0)SS.picked.splice(Math.min(d.ph,SS.picked.length),0,d.bi);
+  }
+  renderArr(-1,0);
+}
+
+function showBar(inner,cls=""){abar.hidden=false;abar.className="answerbar "+cls;abarIn.innerHTML=inner}
+
+function check(){
+  const it=SS.cur, q=it.q; let ok, shown, mine;
+  if(q[0]==="b"){
+    mine=$("#ans").value.trim(); const ans=[].concat(q[2]);
+    ok=ans.some(a=>norm(a)===norm(mine)); shown=ans.join(" / ");
+    $("#ans").disabled=true;
+  }else{
+    const {words,end}=splitSent(q[2]);
+    const got=SS.picked.map(i=>SS.bank[i]);
+    mine=got.join(" ")+end;
+    ok=got.join(" ")===words.join(" "); shown=q[2];
+    SS.lock=true;
+  }
+  const first=!SS.seen[it.id]; SS.seen[it.id]=true;
+  if(first)SS.log.push({it,ok,mine});
+  if(ok){
+    if(first)SS.firstTry++;
+    SS.doneN++; SS.queue.shift();
+    if(SS.mode==="review"&&!SS.missed[it.id])delete S.wrong[it.id];
+  }else{
+    SS.missed[it.id]=true;
+    S.wrong[it.id]={n:((S.wrong[it.id]||{}).n||0)+1};
+    if(SS.mode==="test"){SS.doneN++;SS.queue.shift()}
+    else SS.queue.push(SS.queue.shift()); // 끝에서 다시 풀기
+  }
+  save();
+  const praise=["정답이에요!","잘했어요!","맞았어요!","완벽해요!"][Math.floor(Math.random()*4)];
+  showBar(`<p class="fb-title">${ok?praise:"아쉬워요"}</p>
+    ${ok?"":`<p class="fb-ans en">정답: ${esc(shown)}</p>`}
+    <p class="fb-exp">${esc(q[3])}${!ok&&SS.mode!=="test"?" 이 문제는 끝에서 한 번 더 나와요.":""}</p>
+    <button class="btn" id="cont">계속</button>`, ok?"good":"bad");
+  const c=$("#cont"); c.onclick=next; c.focus();
+}
+
+function wrongList(){
+  const w=SS.log.filter(x=>!x.ok);
+  if(!w.length)return `<div class="allgood">틀린 문제 없이 모두 맞혔어요!</div>`;
+  return `<section class="wrongs"><h2>틀린 문제 ${w.length}개</h2>${w.map(x=>{
+    const q=x.it.q, r=qById(x.it.id), t=r.t;
+    const where=r.pi!=null?`${esc(t.name)} · 스텝 ${r.pi+1}`:`${t.u}단원 · ${esc(t.name)}`;
+    const prompt=q[0]==="b"?`<span class="en">${esc(q[1])}</span>`:esc(q[1]);
+    return `<div class="w"><div class="h">${x.it.no}번<span>${where}</span></div>
+      <p class="qq">${prompt}</p>
+      <p>내 답: <span class="mine en">${esc(x.mine||"(빈칸)")}</span></p>
+      <p>정답: <span class="right en">${esc([].concat(q[2]).join(" / "))}</span></p>
+      <p class="sub">${esc(q[3])}</p></div>`}).join("")}
+    <p class="sub">틀린 문제는 오답 노트에 저장됐어요.</p></section>`;
+}
+
+function finish(){
+  abar.hidden=true;
+  const extended=markStudied();
+  let title,extra="",bar=`<button class="btn" id="home">홈으로</button>`;
+  if(SS.mode==="test"){
+    const wrongTopics=[...new Set(SS.log.filter(x=>!x.ok).map(x=>x.it.t))];
+    S.placed=true; S.allOpen=true; S.rec=TOPICS.map(t=>t.id).filter(id=>wrongTopics.includes(id));
+    title=wrongTopics.length?"레벨 테스트 결과":"전부 맞혔어요!";
+    extra=`<p class="sub">모든 단원이 열렸어요. ${wrongTopics.length?"틀린 "+wrongTopics.length+"개 주제는 홈에서 주황색 '추천'으로 표시돼요.":"원하는 주제를 골라 중2·중3 스텝까지 도전해 보세요."}</p>`;
+  }else if(SS.mode==="lesson"){
+    const tp=SS.tp; S.done[partKey(tp,SS.pi)]=true;
+    title=`스텝 ${SS.pi+1} 완료!`;
+    extra=`<p class="sub">${esc(tp.name)} · ${esc(tp.p[SS.pi].h)}</p>`;
+    const np=tp.p.findIndex((_,i)=>!S.done[partKey(tp,i)]);
+    bar=np>=0?`<div class="row"><button class="btn" id="nextstep">스텝 ${np+1} 개념 보기</button><button class="btn ghost" id="home">홈으로</button></div>`
+             :`<div class="row"><button class="btn" id="home">${esc(tp.name)} 완료! 홈으로</button></div>`;
+    SS.np=np;
+  }else title="복습 완료!";
+  save();
+  const left=Object.keys(S.wrong).length;
+  app.innerHTML=`<section class="card result pop"><p class="big">${SS.firstTry}/${SS.total}</p><h2>${esc(title)}</h2>${extra}
+    <div class="stats"><div class="stat"><b style="color:var(--flame)">${curStreak()}일</b><span>${extended?"연속 학습 +1":"연속 학습"}</span></div>
+    <div class="stat"><b style="color:var(--bad)">${left}</b><span>오답 노트에 남은 문제</span></div></div></section>
+    ${wrongList()}${backupBox("bk-res")}`;
+  showBar(bar);
+  $("#home").onclick=home;
+  wireBackup("bk-res");
+  const ns=$("#nextstep"); if(ns){const tp=SS.tp,np=SS.np;ns.onclick=()=>topicPage(tp,np)}
+  window.scrollTo(0,0);
+}
+
+/* ---------- 보호자용 ---------- */
+function parent(){
+  abar.hidden=true;
+  let html=`<div class="lesson-top"><button class="x" id="close" aria-label="닫기">${ICON.x}</button><h2 style="font-size:22px">전체 문제와 정답</h2></div>
+  <p class="sub">문제를 검수할 때 쓰세요. 고칠 문제가 있으면 주제, 스텝, 번호를 알려주시면 돼요.</p><div class="plist">`;
+  for(const tp of TOPICS){
+    html+=`<section><h3>${tp.u}단원 · ${esc(tp.name)}</h3>${tp.p.map((p,pi)=>`<p style="font-weight:700;font-size:14px">스텝 ${pi+1} ${lvTag(p.lv)} ${esc(p.h)}</p><ol>${p.q.map(q=>`<li>${q[0]==="b"?`<span class="en">${esc(q[1])}</span> → <span class="a">${esc([].concat(q[2]).join(" / "))}</span>`:`${esc(q[1])} → <span class="a en">${esc(q[2])}</span>`}</li>`).join("")}</ol>`).join("")}</section>`;
+  }
+  html+=`<section><h3>레벨 테스트</h3><ol>${TEST.map(t=>`<li>${topicOf(t.t).u}단원 ${esc(topicOf(t.t).name)}: <span class="en">${esc(t.q[1])}</span> → <span class="a">${esc(t.q[2])}</span></li>`).join("")}</ol></section>
+  <section><h3>기록 초기화</h3><p style="font-size:14px">연속 학습일, 진도, 오답 노트를 모두 지우고 레벨 테스트부터 다시 시작해요.</p>
+  <button class="btn ghost" id="reset1">기록 초기화</button><div class="confirm" id="conf" hidden><b>정말 모두 지울까요? 되돌릴 수 없어요.</b>
+  <div class="row"><button class="btn" id="reset2" style="background:var(--bad);color:#fff;box-shadow:none">모두 지우기</button><button class="btn ghost" id="reset0">취소</button></div></div></section></div>`;
+  app.innerHTML=html;
+  $("#close").onclick=home;
+  $("#reset1").onclick=()=>$("#conf").hidden=false;
+  $("#reset0").onclick=()=>$("#conf").hidden=true;
+  $("#reset2").onclick=()=>{S=fresh();save();home()};
+  window.scrollTo(0,0);
+}
+
+load(); home();
+
+/* 앱 설치(PWA)와 저장 공간 보호 */
+if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})})}
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+</script>
+</body></html>

@@ -1,0 +1,17 @@
+{
+  "name": "문법 한 걸음",
+  "short_name": "문법 한 걸음",
+  "description": "중학 영어 문법을 기본부터 중3까지 매일 한 걸음씩",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EEF3F6",
+  "theme_color": "#0F7A78",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
