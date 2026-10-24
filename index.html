@@ -190,6 +190,20 @@ img{max-width:100%}
 .warn{background:var(--flame-soft);border-color:var(--flame)}
 .warn h2{color:var(--flame)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(16px + env(safe-area-inset-top,0px));z-index:60;background:var(--good);color:#fff;font-weight:700;padding:10px 18px;border-radius:999px}
+.stats .stat b{font-size:24px}
+.big2{font-family:var(--f-display);font-size:32px;color:var(--accent);font-weight:400}
+.urows{display:flex;flex-direction:column;gap:8px}
+.urow{display:grid;grid-template-columns:52px 1fr 44px;align-items:center;gap:10px;font-size:14px;font-variant-numeric:tabular-nums}
+.ubar{height:12px;border-radius:999px;background:var(--line);overflow:hidden}
+.ubar i{display:block;height:100%;background:var(--good);border-radius:999px}
+.uv{text-align:right;color:var(--muted)}
+.weak{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.recent{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.recent li{display:grid;grid-template-columns:84px 1fr auto;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:center}
+.recent .rd{color:var(--muted);font-variant-numeric:tabular-nums}
+.recent .rw{min-width:0}
+.recent .rs{font-weight:700;font-variant-numeric:tabular-nums}
+.rs.good{color:var(--good)}.rs.mid{color:var(--flame)}.rs.low{color:var(--bad)}
 </style></head><body>
 
 <div class="wrap" id="app"></div>
@@ -708,7 +722,7 @@ const TEST=[
 
 /* ---------- 저장 ---------- */
 const KEY="grammar-step-v3";
-const fresh=()=>({placed:false,allOpen:false,rec:[],done:{},wrong:{},streak:0,last:null,days:[]});
+const fresh=()=>({placed:false,allOpen:false,rec:[],done:{},wrong:{},streak:0,last:null,days:[],hist:[]});
 let S;
 function load(){try{S=Object.assign(fresh(),JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){S=fresh()}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -718,7 +732,7 @@ const hasProgress=()=>S.placed||Object.keys(S.done).length>0||S.days.length>0;
 
 /* ---------- 진도 코드 (백업과 복원) ---------- */
 function makeCode(){
-  const j=JSON.stringify(S);
+  const j=JSON.stringify(Object.assign({},S,{ex:Date.now()}));
   return "GS1-"+btoa(unescape(encodeURIComponent(j)));
 }
 function readCode(code){
@@ -732,6 +746,7 @@ function backupBox(id){
   return `<section class="card backup" id="${id}"><h2>진도 코드</h2>
     <p class="sub">${STORE_OK?"진도는 이 폰에 자동 저장돼요. 혹시 몰라 공부가 끝나면 진도 코드를 복사해서 카톡 '나와의 채팅' 같은 곳에 보관해 두세요.":"이 화면에서는 진도가 자동 저장되지 않을 수 있어요. 공부가 끝나면 꼭 진도 코드를 복사해서 카톡 '나와의 채팅' 같은 곳에 보관해 두세요."}</p>
     <div class="row"><button class="btn" data-act="copy">진도 코드 복사</button><button class="btn ghost" data-act="open">진도 코드 불러오기</button></div>
+    <button class="btn flame" data-act="share">엄마·아빠에게 학습 리포트 보내기</button>
     <textarea class="code" readonly hidden aria-label="진도 코드"></textarea>
     <p class="msg" hidden></p>
     <div class="restore" hidden><textarea class="code in" placeholder="복사해 둔 진도 코드를 여기에 붙여넣으세요" aria-label="불러올 진도 코드"></textarea>
@@ -745,6 +760,13 @@ function wireBackup(id){
     const code=makeCode(); out.value=code; out.hidden=false;
     const fallback=()=>{out.focus();out.select();say("코드를 길게 눌러 복사해 주세요.")};
     try{navigator.clipboard.writeText(code).then(()=>say("복사했어요! 카톡 '나와의 채팅'에 붙여넣어 보관하세요."),fallback)}catch(e){fallback()}
+  };
+  box.querySelector('[data-act="share"]').onclick=()=>{
+    const code=makeCode();
+    const text="[문법 한 걸음] 학습 리포트 코드예요. 보호자 리포트 화면에 붙여넣어 주세요.\n"+code;
+    const copy=()=>{out.value=code;out.hidden=false;
+      try{navigator.clipboard.writeText(text).then(()=>say("복사했어요! 카톡으로 엄마·아빠에게 붙여넣어 보내 주세요."),()=>{out.focus();out.select();say("코드를 길게 눌러 복사해서 보내 주세요.")})}catch(e){out.focus();out.select()}};
+    if(navigator.share){navigator.share({title:"문법 한 걸음 학습 리포트",text}).then(()=>say("보냈어요!"),()=>{})}else copy();
   };
   box.querySelector('[data-act="open"]').onclick=()=>{rs.hidden=!rs.hidden;if(!rs.hidden)inp.focus()};
   box.querySelector('[data-act="load"]').onclick=()=>{
@@ -847,7 +869,7 @@ function home(){
     }
     html+=`</div></section>`;
   }
-  html+=`</div>${backupBox("bk-home")}<footer class="foot">${S.placed?'<button class="link" id="retest">레벨 테스트 다시 보기</button>':""}<button class="link" id="go-parent">보호자용: 전체 문제와 정답 보기</button></footer>`;
+  html+=`</div>${backupBox("bk-home")}<footer class="foot">${S.placed?'<button class="link" id="retest">레벨 테스트 다시 보기</button>':""}<button class="link" id="go-report">보호자용: 학습 리포트 보기</button><button class="link" id="go-parent">보호자용: 전체 문제와 정답 보기</button></footer>`;
   app.innerHTML=html;
   window.scrollTo(0,0);
   const b=id=>document.getElementById(id);
@@ -857,6 +879,7 @@ function home(){
   b("go-rec")&&(b("go-rec").onclick=()=>topicPage(topicOf(recLeft[0])));
   b("go-review")&&(b("go-review").onclick=startReview);
   b("go-parent").onclick=parent;
+  b("go-report").onclick=()=>report(false);
   wireBackup("bk-home");
   b("bk-top")&&(b("bk-top").onclick=()=>document.getElementById("bk-home").scrollIntoView({block:"center"}));
   app.querySelectorAll(".stop").forEach(el=>el.onclick=()=>{const tp=topicOf(el.dataset.t);if(unitOpen(tp.u))topicPage(tp)});
@@ -1073,6 +1096,7 @@ function finish(){
              :`<div class="row"><button class="btn" id="home">${esc(tp.name)} 완료! 홈으로</button></div>`;
     SS.np=np;
   }else title="복습 완료!";
+  S.hist=(S.hist||[]).concat([[Date.now(),SS.mode==="test"?"t":SS.mode==="lesson"?"l":"r",SS.mode==="lesson"?partKey(SS.tp,SS.pi):SS.mode==="test"?(SS.log.filter(x=>!x.ok).map(x=>x.it.t).join(",")):"",SS.firstTry,SS.total]]).slice(-200);
   save();
   const left=Object.keys(S.wrong).length;
   app.innerHTML=`<section class="card result pop"><p class="big">${SS.firstTry}/${SS.total}</p><h2>${esc(title)}</h2>${extra}
@@ -1106,7 +1130,68 @@ function parent(){
   window.scrollTo(0,0);
 }
 
-load(); home();
+/* ---------- 보호자 학습 리포트 ---------- */
+const PKEY="grammar-step-parent";
+const fmtDay=ms=>{const d=new Date(ms);return (d.getMonth()+1)+"/"+d.getDate()+" "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")};
+function reportHTML(R,label){
+  const totalSteps=TOPICS.reduce((a,t)=>a+t.p.length,0);
+  const doneSteps=Object.keys(R.done||{}).filter(k=>R.done[k]).length;
+  const hist=R.hist||[];
+  const sumS=hist.filter(h=>h[1]!=="t").reduce((a,h)=>a+h[3],0), sumN=hist.filter(h=>h[1]!=="t").reduce((a,h)=>a+h[4],0);
+  const acc=sumN?Math.round(sumS/sumN*100):null;
+  const st=(R.last===today()||R.last===daysAgo(1))?R.streak:0;
+  const labels=["일","월","화","수","목","금","토"]; let week="";
+  for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const on=(R.days||[]).includes(ymd(d));
+    week+=`<div>${labels[d.getDay()]}<div class="dot ${on?"on":""} ${i===0?"today":""}">${on?ICON.check:""}</div></div>`}
+  const tests=hist.filter(h=>h[1]==="t"); const lt=tests[tests.length-1];
+  const ltWrong=lt?lt[2].split(",").filter(Boolean).map(id=>topicOf(id)).filter(Boolean):[];
+  // 약한 주제: 오답 노트를 주제별로
+  const weak={}; Object.keys(R.wrong||{}).forEach(id=>{const k=id.split(".")[0];const t=k==="test"?(TEST[+id.split(".")[1]]||{}).t:k;if(t)weak[t]=(weak[t]||0)+1});
+  const weakList=Object.entries(weak).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const unitRows=UNITS.map(u=>{const ts=TOPICS.filter(t=>t.u===u.n);const tot=ts.reduce((a,t)=>a+t.p.length,0);const dn=ts.reduce((a,t)=>a+t.p.filter((_,i)=>R.done&&R.done[partKey(t,i)]).length,0);
+    return `<div class="urow"><span class="un">${u.n}단원</span><span class="ubar"><i style="width:${Math.round(dn/tot*100)}%"></i></span><span class="uv">${dn}/${tot}</span></div>`}).join("");
+  const recent=hist.slice(-15).reverse().map(h=>{
+    let what="오답 복습";
+    if(h[1]==="t")what="레벨 테스트";
+    else if(h[1]==="l"){const [tid,pi]=h[2].split(".");const t=topicOf(tid);what=t?`${esc(t.name)} · 스텝 ${+pi+1}`:"레슨"}
+    const pct=Math.round(h[3]/h[4]*100), c=pct>=80?"good":pct>=50?"mid":"low";
+    return `<li><span class="rd">${fmtDay(h[0])}</span><span class="rw">${what}</span><span class="rs ${c}">${h[3]}/${h[4]}</span></li>`}).join("");
+  return `<section class="card"><p class="sub">${label}</p>
+    <div class="stats"><div class="stat"><b style="color:var(--flame)">${st}일</b><span>연속 학습</span></div>
+    <div class="stat"><b>${(R.days||[]).length}일</b><span>총 공부한 날</span></div>
+    <div class="stat"><b style="color:var(--accent)">${doneSteps}/${totalSteps}</b><span>완료한 스텝</span></div>
+    <div class="stat"><b style="color:${acc==null?"var(--muted)":acc>=80?"var(--good)":acc>=50?"var(--flame)":"var(--bad)"}">${acc==null?"-":acc+"%"}</b><span>첫 시도 정답률</span></div></div>
+    <div class="week">${week}</div>
+    <p class="sub">마지막 공부: ${R.last||"아직 없음"}</p></section>
+  <section class="card"><h2>레벨 테스트</h2>${lt?`<p><b class="big2">${lt[3]}/${lt[4]}</b> <span class="sub">${fmtDay(lt[0])}</span></p><p class="sub">${ltWrong.length?"틀린 주제: "+ltWrong.map(t=>t.u+"단원 "+esc(t.name)).join(", "):"모두 맞혔어요."}</p>`:`<p class="sub">${R.placed?"레벨 테스트 기록이 없어요. (이번 업데이트 전에 본 테스트는 점수가 남지 않아요)":"아직 레벨 테스트를 보지 않았어요."}</p>`}</section>
+  <section class="card"><h2>단원별 진도</h2><div class="urows">${unitRows}</div></section>
+  <section class="card"><h2>약한 주제</h2>${weakList.length?`<ol class="weak">${weakList.map(([t,n])=>`<li>${topicOf(t).u}단원 ${esc(topicOf(t).name)} <span class="sub">오답 ${n}문제</span></li>`).join("")}</ol>`:`<p class="sub">오답 노트가 비어 있어요.</p>`}<p class="sub">오답 노트에 남은 문제: ${Object.keys(R.wrong||{}).length}개</p></section>
+  <section class="card"><h2>최근 기록</h2>${recent?`<ul class="recent">${recent}</ul>`:`<p class="sub">아직 기록이 없어요.</p>`}<p class="sub">점수는 처음 시도에 맞힌 문제 수예요.</p></section>`;
+}
+function report(parentOnly){
+  abar.hidden=true;
+  let saved=null; try{saved=localStorage.getItem(PKEY)}catch(e){}
+  let R=null,label="";
+  if(saved){try{R=readCode(saved);label="아이가 보낸 코드 기준 · "+(R.ex?fmtDay(R.ex)+"에 만든 리포트":"")}catch(e){R=null}}
+  if(!R&&!parentOnly){R=S;label="이 폰에 저장된 기록 기준"}
+  app.innerHTML=`<div class="lesson-top">${parentOnly?"":`<button class="x" id="close" aria-label="닫기">${ICON.x}</button>`}<h1 style="font-size:26px">학습 리포트</h1></div>
+    ${R?reportHTML(R,label):`<section class="card"><h2>아이의 학습 리포트 코드를 붙여넣어 주세요</h2><p class="sub">아이 폰의 앱에서 맨 아래 '엄마·아빠에게 학습 리포트 보내기'를 누르면 카톡으로 코드를 보낼 수 있어요. 받은 메시지 전체를 복사해서 아래에 붙여넣으면 돼요.</p></section>`}
+    <section class="card"><h2>${R&&saved?"새 리포트 불러오기":"리포트 코드 붙여넣기"}</h2>
+    <textarea class="code in" id="rp-in" placeholder="아이가 보낸 메시지나 GS1-로 시작하는 코드를 붙여넣으세요" aria-label="리포트 코드" style="width:100%;box-sizing:border-box;min-height:84px;font:13px/1.4 ui-monospace,Menlo,monospace;padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)"></textarea>
+    <button class="btn" id="rp-go">리포트 보기</button><p class="msg" id="rp-msg" hidden style="color:var(--bad);font-weight:700;font-size:14px"></p>
+    ${saved&&!parentOnly?`<button class="link" id="rp-mine">이 폰의 기록으로 보기</button>`:""}</section>`;
+  const c=$("#close"); if(c)c.onclick=home;
+  $("#rp-go").onclick=()=>{
+    const m=$("#rp-in").value.match(/GS1-[A-Za-z0-9+\/=\s]+/);
+    try{if(!m)throw 0;const r=readCode(m[0]);try{localStorage.setItem(PKEY,m[0].replace(/\s+/g,""))}catch(e){}report(parentOnly)}
+    catch(e){const g=$("#rp-msg");g.textContent="코드를 읽지 못했어요. 아이가 보낸 메시지 전체를 다시 복사해서 붙여넣어 주세요.";g.hidden=false}
+  };
+  const mine=$("#rp-mine"); if(mine)mine.onclick=()=>{try{localStorage.removeItem(PKEY)}catch(e){}report(false)};
+  window.scrollTo(0,0);
+}
+
+load();
+if(window.PARENT_MODE)report(true); else home();
 
 /* 앱 설치(PWA)와 저장 공간 보호 */
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})})}

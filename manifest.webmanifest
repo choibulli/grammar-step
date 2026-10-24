@@ -3,6 +3,7 @@
   "short_name": "문법 한 걸음",
   "description": "중학 영어 문법을 기본부터 중3까지 매일 한 걸음씩",
   "lang": "ko",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
