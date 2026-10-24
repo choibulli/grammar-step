@@ -721,6 +721,187 @@ const TEST=[
  {t:"t16",q:["b","Let's find something ___ to do this weekend. (fun)","fun","-thing + 형용사 + to부정사"]}
 ];
 
+/* ---------- 스텝 3·4 상향 문제 (길고 복합적인 문장, 함정 포함) ---------- */
+const HARD={
+t1:[[
+["b","The boys who are playing soccer on the playground ___ my classmates from last year.","are","관계사절은 수식어구예요. 진짜 주어는 The boys(복수) → are."],
+["b","Every one of the students in Mr. Kim's class ___ going to join the school festival this Friday.","is","Every one of ~ 는 one(단수)이 주어 → is."],
+["b","A: ___ your parents at home when the thief broke in last night? B: No, they weren't.","Were","your parents(복수) + 과거 → Were."],
+["a","내 친구들 중 한 명은 어제 학교에 결석했다.","One of my friends was absent from school yesterday.","One of ~ 는 단수 취급 + 과거 → was."]
+],[
+["b","Neither the teacher nor the students ___ aware that the test had been cancelled.","were","Neither A nor B는 B(the students, 복수)에 일치 + 과거 → were."],
+["b","There ___ still a lot of homework that I have to finish before the weekend.","is","homework는 셀 수 없는 명사 → There is."],
+["b","Not only the singer but also her fans ___ surprised by the sudden announcement.","were","Not only A but also B는 B(her fans, 복수)에 일치 + 과거 → were."],
+["a","수프도 샐러드도 너무 짜지 않았다.","Neither the soup nor the salad was too salty.","Neither A nor B는 B(the salad, 단수)에 일치 → was."]
+]],
+t2:[[
+["b","The girl who lives next door to my grandparents ___ to church every Sunday morning. (go)","goes","주어는 The girl(3인칭 단수). go → goes."],
+["b","My brother never ___ his homework before dinner, but he always finishes it before bed. (do)","does","never 뒤에서도 3인칭 단수 → does."],
+["b","A: How often ___ the buses to the airport run on weekends? B: Every thirty minutes.","do","the buses(복수) → do."],
+["a","그녀는 시험 전에 보통 늦게까지 깨어 있지 않는다.","She doesn't usually stay up late before an exam.","빈도부사 usually는 조동사 뒤, 일반동사 앞."]
+],[
+["b","The train for Busan ___ at 7:30 tomorrow morning, so we should hurry. (leave)","leaves","시간표처럼 확정된 미래는 현재시제 → leaves."],
+["b","Please call me as soon as you ___ at the station. (arrive)","arrive","시간 부사절에서는 미래 대신 현재시제 → arrive."],
+["b","Our teacher told us that light ___ faster than sound. (travel)","travels","불변의 진리는 항상 현재시제 → travels."],
+["a","그는 매일 아침 출근하기 전에 개를 산책시킨다.","He walks his dog every morning before he goes to work.","반복되는 습관 → 현재시제, 3인칭 단수 -s."]
+]],
+t3:[[
+["b","I ___ what you mean, but could you explain it once more? (understand)","understand","understand는 상태동사라 진행형으로 쓰지 않아요."],
+["b","This soup ___ delicious. Did you add some special spices? (taste)","tastes","감각을 나타내는 taste(~한 맛이 나다)는 상태동사 → tastes."],
+["b","My sister is ___ a new sweater now because she wants to wear it tomorrow. (knit)","knitting","단모음+단자음으로 끝나는 동사는 자음을 한 번 더 → knitting."],
+["a","나는 네가 무슨 말을 하고 있는지 모르겠다.","I don't know what you are talking about.","know는 상태동사(진행형 X), talk는 지금 하는 동작이라 진행형."]
+],[
+["b","My dad was reading a newspaper while my mom ___ a TV drama. (watch)","was watching","같은 시점에 진행 중이던 두 동작 → 과거진행형."],
+["b","I ___ to Jeju this weekend, so I can't join your birthday party. (fly)","am flying","이미 정해진 가까운 미래 → 현재진행형."],
+["b","When the earthquake struck, the students ___ their lunch in the cafeteria. (eat)","were eating","그 순간 진행 중이던 일 → 과거진행형."],
+["a","그가 전화했을 때 우리는 영화를 보고 있었다.","We were watching a movie when he called me.","진행 중이던 일(과거진행) + 그때 일어난 일(과거)."]
+]],
+t4:[[
+["b","She is really good at ___ difficult math problems in a very short time. (solve)","solving","전치사 at 뒤에는 동명사 → solving."],
+["b","I couldn't help ___ when I heard his funny story. (laugh)","laughing","can't help ~ing: ~하지 않을 수 없다."],
+["b","My little sister is busy ___ her science project for tomorrow's class. (prepare)","preparing","be busy ~ing: ~하느라 바쁘다."],
+["a","그 영화는 두 번 볼 가치가 있다.","The movie is worth watching twice.","be worth ~ing: ~할 가치가 있다."]
+],[
+["b","I'll never forget ___ the Eiffel Tower with my parents when I was ten. (visit)","visiting","forget + ~ing: (과거에) ~한 것을 잊다."],
+["b","Please remember ___ the lights before you leave the classroom. (turn off)","to turn off","remember + to부정사: (앞으로) ~할 것을 기억하다."],
+["b","He stopped ___ a text message because the teacher was looking at him. (send)","sending","stop + ~ing: ~하는 것을 멈추다."],
+["a","나는 그에게 내 비밀을 말한 것을 후회한다.","I regret telling him my secret.","regret + ~ing: (과거에) ~한 것을 후회하다."]
+]],
+t5:[[
+["b","___ your brother finish his report before the deadline last Friday?","Did","일반동사 과거 의문문 → Did + 주어 + 동사원형."],
+["b","Yesterday I ___ to bed early, but I couldn't fall asleep until midnight. (go)","went","go의 과거형은 went."],
+["b","She didn't ___ the phone because she was taking a shower. (hear)","hear","didn't 뒤에는 동사원형."],
+["a","너는 어제 왜 학교에 오지 않았니?","Why didn't you come to school yesterday?","의문사 + didn't + 주어 + 동사원형."]
+],[
+["b","I ___ my wallet on the bus yesterday, so I had to walk home. (lose)","lost","yesterday가 있으면 과거 → lost."],
+["b","She ___ in Daejeon for ten years, and she still lives there. (live)","has lived","현재까지 이어지는 일 → 현재완료."],
+["b","My brother ___ to Japan in 2019 and fell in love with ramen. (go)","went","in 2019처럼 과거 시점이 분명하면 과거시제."],
+["a","나는 이렇게 맛있는 케이크를 먹어 본 적이 없다.","I have never eaten such a delicious cake.","경험 → have never + 과거분사(eaten)."]
+]],
+t6:[[
+["b","Put on your jacket, ___ you will catch a cold in this freezing weather.","or","명령문, or ~: ~해라, 그렇지 않으면."],
+["b","You won't pass the exam ___ you study harder from now on.","unless","unless = if ~ not (~하지 않으면)."],
+["b","If it ___ tomorrow, we will have to cancel the school picnic. (rain)","rains","조건 부사절에서는 미래 대신 현재시제."],
+["a","서두르지 않으면 너는 첫 기차를 놓칠 것이다.","Unless you hurry, you will miss the first train.","unless 절은 긍정형 + 현재시제."]
+],[
+["b","Both the principal ___ the vice principal attended the graduation ceremony.","and","Both A and B: A와 B 둘 다."],
+["b","Neither my father ___ my mother likes spicy food.","nor","Neither A nor B: A도 B도 아닌."],
+["b","Not only the students but also the teacher ___ excited about the field trip. (be)","is","B(the teacher, 단수)에 동사 일치 → is."],
+["a","그는 영어뿐만 아니라 중국어도 유창하게 말한다.","He speaks not only English but also Chinese fluently.","not only A but also B."]
+]],
+t7:[[
+["b","I haven't decided yet ___ to invite to my birthday party.",["who","whom"],"의문사 + to부정사: 누구를 초대할지."],
+["b","My doctor told me ___ to eat too much sugar.","not","to부정사의 부정은 to 앞에 not → not to eat."],
+["b","Could you show me ___ to get to the nearest subway station?","how","how to ~: ~하는 방법."],
+["a","우리는 어디에서 만날지 아직 정하지 못했다.","We haven't decided where to meet yet.","where to ~: 어디서 ~할지."]
+],[
+["b","It is very kind ___ you to carry my heavy bag all the way home.","of","사람의 성격·태도(kind, careless 등) → of + 목적격."],
+["b","My mom wants me ___ the dishes after dinner every day. (wash)","to wash","want + 목적어 + to부정사."],
+["b","It is not easy ___ a foreigner to learn Korean in a few months.","for","그 밖의 형용사(easy, difficult 등) → for + 목적격."],
+["a","선생님은 우리에게 교실에서 뛰지 말라고 말씀하셨다.","The teacher told us not to run in the classroom.","tell + 목적어 + (not) to부정사."]
+]],
+t8:[[
+["b","You had better ___ the medicine now if you want to get better soon. (take)","take","had better + 동사원형."],
+["b","I used to ___ computer games every day, but now I prefer reading. (play)","play","used to + 동사원형: ~하곤 했다."],
+["b","___ you like to join us for dinner at the new Italian restaurant tonight?","Would","Would you like to ~?: ~하시겠어요?"],
+["a","너는 그 영화를 보지 않는 게 좋겠다. 너무 무섭거든.","You had better not watch that movie because it's too scary.","had better not + 동사원형."]
+],[
+["b","Jisu has been studying since morning. She ___ be exhausted. (~임이 틀림없다)","must","must be: ~임이 틀림없다."],
+["b","That ___ be Tom's brother. Tom doesn't have any brothers. (~일 리가 없다)",["can't","cannot"],"can't be: ~일 리가 없다."],
+["b","The lights are off. They ___ have gone out already. (~했음이 틀림없다)","must","must have + 과거분사: ~했음이 틀림없다."],
+["a","그는 지금 집에 있을지도 모른다.","He may be at home now.","may be: ~일지도 모른다."]
+]],
+t9:[[
+["b","I wanted to fix the broken bike ___, but I needed my father's help.","myself","직접 ~하다(강조 용법) → myself."],
+["b","The principal ___ came to the classroom to thank the volunteers. (교장 선생님 본인이)","herself","강조 용법: 주어 바로 뒤에 재귀대명사."],
+["b","Did you make this beautiful scarf ___ or did your grandmother help you?","yourself","you → yourself."],
+["a","나는 그 책을 직접 읽어 보고 싶다.","I want to read the book myself.","강조 용법은 생략해도 문장이 성립해요."]
+],[
+["b","Please help ___ to some cookies. They are fresh from the oven. (너희들)","yourselves","help yourself: 마음껏 드세요. 여러 명이면 yourselves."],
+["b","The little girl was sitting by ___ in the corner of the room. (혼자서)","herself","by oneself: 혼자서."],
+["b","He taught ___ how to play the guitar by watching videos.","himself","teach oneself: 독학하다."],
+["a","우리는 그 파티에서 정말 즐거운 시간을 보냈다.","We enjoyed ourselves a lot at the party.","enjoy oneself: 즐거운 시간을 보내다."]
+]],
+t10:[[
+["b","She must be very smart ___ solve such a difficult puzzle in five minutes.","to","판단의 근거: ~하다니."],
+["b","The boy grew up ___ become a famous scientist.","to","결과: 자라서 ~가 되다."],
+["b","I was so happy ___ hear that you won first prize in the contest.","to","감정의 원인: ~해서."],
+["a","그는 깨어나서 자신이 병원에 있다는 것을 알았다.","He woke up to find himself in a hospital.","결과: 깨어나 보니 ~."]
+],[
+["b","The soup was too hot ___ eat, so I waited for a few minutes.","to","too ~ to ...: 너무 ~해서 ...할 수 없다."],
+["b","He is strong enough ___ lift that heavy box by himself. (lift)","to","형용사 + enough to ~: ~할 만큼 충분히."],
+["b","This lake is ___ dangerous for children to swim in.","too","too + 형용사 + (for ~) to ...."],
+["a","그 상자는 너무 무거워서 내가 들 수 없었다.","The box was too heavy for me to lift.","too ~ for 의미상 주어 to ...."]
+]],
+t11:[[
+["b","The fresh bread smells ___ in the morning. (wonderful / wonderfully)","wonderful","감각동사 뒤에는 형용사."],
+["b","She spoke ___ to the baby so that he wouldn't wake up. (soft / softly)","softly","일반동사 spoke를 꾸미는 건 부사."],
+["b","You look ___ today. Did you sleep well last night? (tired / tiredly)","tired","look + 형용사."],
+["a","그 음악은 이상하게 들리지만 나는 마음에 든다.","The music sounds strange, but I like it.","sound + 형용사."]
+],[
+["b","The weather has turned ___ since last week. (cold / coldly)","cold","turn + 형용사: ~하게 변하다."],
+["b","The milk went ___ because I left it outside all day. (bad / badly)","bad","go bad: 상하다."],
+["b","The students kept ___ while the teacher was explaining. (quiet / quietly)","quiet","keep + 형용사: ~한 상태를 유지하다."],
+["a","그녀의 얼굴이 놀라움으로 빨개졌다.","Her face turned red with surprise.","turn + 형용사."]
+]],
+t12:[[
+["b","It was ___ cold that we decided to stay home and watch movies.","so","so + 형용사 + that ~: 너무 ~해서 ...하다."],
+["b","___ it was raining heavily, the soccer game was postponed.",["Since","As","Because"],"문장 앞의 이유절: Since / As / Because."],
+["b","She ran so fast ___ nobody could catch her.","that","so ~ that ...: 너무 ~해서 ...하다."],
+["a","그녀는 너무 피곤해서 일찍 잠자리에 들었다.","She was so tired that she went to bed early.","so + 형용사 + that절."]
+],[
+["b","A: Why were you late for school? B: ___ I missed the first bus.","Because","Why 질문에는 Because로 답해요."],
+["b","I forgot my umbrella. That's ___ I got wet on my way home.","why","That's why + 결과."],
+["b","The road was closed. That's ___ the heavy snow fell all night.","because","That's because + 원인."],
+["a","그래서 나는 항상 우산을 가지고 다닌다.","That's why I always carry an umbrella.","That's why + 결과."]
+]],
+t13:[[
+["b","My mother made me ___ my room before I went out to play. (clean)","clean","make + 목적어 + 동사원형."],
+["b","The teacher let the students ___ their phones during the break. (use)","use","let + 목적어 + 동사원형."],
+["b","I had my brother ___ my bike while I was away. (fix)","fix","have + 목적어 + 동사원형."],
+["a","엄마는 내가 친구들과 밤늦게까지 노는 것을 허락하지 않으셨다.","My mom didn't let me play with my friends late at night.","let + 목적어 + 동사원형."]
+],[
+["b","I saw the thief ___ over the fence and run away. (climb)","climb","지각동사 + 목적어 + 동사원형."],
+["b","My teacher advised me ___ more books during the vacation. (read)","to read","advise + 목적어 + to부정사."],
+["b","We heard someone ___ for help near the river. (shout)",["shout","shouting"],"지각동사 + 목적어 + 동사원형 / -ing."],
+["a","그는 내게 그 문을 닫아 달라고 부탁했다.","He asked me to close the door.","ask + 목적어 + to부정사."]
+]],
+t14:[[
+["b","___ is true that regular exercise helps us stay healthy and happy.","It","가주어 It ~ that절."],
+["b","The problem is ___ we don't have enough time to finish the project.","that","보어로 쓰인 that절."],
+["b","That the Earth is round ___ well known to everyone. (be)","is","that절 주어는 단수 취급."],
+["a","그가 그 시험에 합격했다는 것은 사실이다.","It is true that he passed the exam.","It is + 형용사 + that절."]
+],[
+["b","I can't believe ___ you said to your best friend yesterday. (네가 말한 것)","what","what = the thing which (선행사 없음)."],
+["b","She told me the fact ___ the museum would be closed next Monday.","that","동격의 that: the fact = 그 내용."],
+["b","___ matters most is not winning but trying your best.","What","what절이 주어(~하는 것)."],
+["a","그녀가 상을 받았다는 소식이 모두를 기쁘게 했다.","The news that she won the prize made everyone happy.","동격 that절 + make + 목적어 + 형용사."]
+]],
+t15:[[
+["b","She is a very kind girl. → ___ a kind girl she is!","What","명사가 있으면 What + a + 형용사 + 명사."],
+["b","The movie was so interesting. → ___ interesting the movie was!","How","명사 없이 형용사만 → How + 형용사."],
+["b","They are very talented dancers. → ___ talented dancers they are!","What","복수명사에는 a 없이 What + 형용사 + 복수명사."],
+["a","그 소년은 얼마나 빠르게 달리는가!","How fast the boy runs!","How + 부사 + 주어 + 동사!"]
+],[
+["b","___ beautifully she sings! Her voice is so clear.","How","부사(beautifully)만 있으면 How."],
+["b","___ heavy bags these are! I can't carry them all.","What","명사(bags)가 있으면 What."],
+["b","What a surprise it is ___ see you here!","to","It is + 명사 + to부정사 구조."],
+["a","정말 멋진 생각을 하셨네요!","What a wonderful idea you had!","What + a + 형용사 + 명사 + 주어 + 동사!"]
+]],
+t16:[[
+["b","I want something cold ___ drink because it's so hot today.","to","-thing + 형용사 + to부정사."],
+["b","Is there anything ___ in today's newspaper? (interesting)","interesting","-thing은 형용사가 뒤에서 꾸며요."],
+["b","She didn't say anything ___ about the accident. (important)","important","anything + 형용사."],
+["a","나는 오늘 뭔가 특별한 것을 하고 싶다.","I want to do something special today.","something + 형용사."]
+],[
+["b","I have a lot of homework ___ do before tomorrow.","to","명사 + to부정사: ~할 (명사)."],
+["b","He needs a friend to talk ___ when he feels lonely. (with)","with","talk with a friend → 전치사를 빠뜨리지 않기."],
+["b","There is nothing ___ eat in the refrigerator, so let's order pizza.","to","nothing to eat: 먹을 것이 없다."],
+["a","나는 앉을 의자가 필요하다.","I need a chair to sit on.","a chair to sit on: 전치사 on 유지."]
+]]
+};
+TOPICS.forEach(t=>{const h=HARD[t.id];if(h){t.p[2].q=h[0];t.p[3].q=h[1]}});
+
 /* ---------- 저장 ---------- */
 const KEY="grammar-step-v3";
 const fresh=()=>({placed:false,allOpen:false,rec:[],done:{},wrong:{},streak:0,last:null,days:[],hist:[]});
