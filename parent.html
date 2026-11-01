@@ -1186,7 +1186,7 @@ function qById(id){
   return q?{q,t,pi:+k[1]}:null;
 }
 const unitDone=u=>TOPICS.filter(t=>t.u===u).every(topicDone);
-const unitOpen=u=>S.placed&&(S.allOpen||u===1||unitDone(u-1));
+const unitOpen=u=>true; // 모든 단원 열림 (잠금 해제)
 
 /* ---------- 홈 ---------- */
 function home(){
