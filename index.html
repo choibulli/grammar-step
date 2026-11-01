@@ -204,6 +204,35 @@ img{max-width:100%}
 .recent .rw{min-width:0}
 .recent .rs{font-weight:700;font-variant-numeric:tabular-nums}
 .rs.good{color:var(--good)}.rs.mid{color:var(--flame)}.rs.low{color:var(--bad)}
+
+/* 단어 카드 · 고르기 문제 */
+.wtools{display:flex;gap:8px;flex-wrap:wrap}
+.wtools .btn{padding:8px 12px;font-size:14px;box-shadow:none}
+.wtools .btn.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.wlist{display:flex;flex-direction:column;gap:8px}
+.wd{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:3px;text-align:left;cursor:pointer}
+.wd-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.wd-top b{font-family:var(--f-en);font-size:18px}
+.pos{font-size:12px;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.pos.p-동{background:var(--flame-soft);color:var(--flame)}
+.pos.p-형{background:var(--good-soft);color:var(--good)}
+.pos.p-부,.pos.p-전{background:var(--deep-soft);color:var(--deep)}
+.pos.p-숙{background:var(--bad-soft);color:var(--bad)}
+.tb{font-size:11px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:0 6px}
+.wd-ko{font-size:15px;font-weight:700}
+.wd-en{font-size:14px;color:var(--ink);font-style:italic}
+.wd-rel{font-size:13px;color:var(--muted)}
+.wlist.hide-ko .wd:not(.show) .wd-ko,.wlist.hide-en .wd:not(.show) .wd-en{color:transparent;background:var(--line);border-radius:6px;user-select:none}
+.relbox{display:flex;flex-direction:column;gap:8px}
+.relbox div{font-size:14px;line-height:1.6}
+.relbox b{display:block;color:var(--accent);font-size:14px}
+.choices{display:flex;flex-direction:column;gap:10px}
+.choice{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:14px;font-size:17px;text-align:left}
+.choice.on{border-color:var(--accent);background:var(--accent-soft)}
+.choice.right{border-color:var(--good);background:var(--good-soft)}
+.choice.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.choice:disabled{cursor:default}
+.q-prompt{font-size:18px;line-height:1.6;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
 </style></head><body>
 
 <div class="wrap" id="app"></div>
@@ -578,6 +607,167 @@ const TOPICS=[
      ["b","I was late. That's ___ I missed the bus.","because","뒤에 이유(버스 놓침)가 오니 That's because예요."],
      ["b","A: ___ do you like Korean food? B: Because it's healthy.","why","Because로 답하니 이유를 묻는 Why예요."],
      ["a","그것이 내가 한복을 좋아하는 이유이다.","That's why I like hanbok.","That's why + 결과예요."]]}]},
+
+{id:"v7",u:7,name:"7단원 어휘",rg:"단어 74개 · 영영풀이 · 유의어/반의어",intro:"단어 카드에서 품사, 뜻, 영영풀이, 유의어(=)·반의어(↔)를 익히고 스텝마다 퀴즈를 풀어요. '교과서' 표시는 교과서 Meaning in English 풀이예요.",
+ rel:[["유의어 (=)","protect = keep · reduce = lessen · waste = trash, garbage · create = make, produce · correct = right · wear = put on · for example = for instance · take part in = join · quick = fast · bin = trash can"],
+      ["반의어 (↔)","buy ↔ sell · hurt ↔ heal · waste ↔ save · useful ↔ useless · correct ↔ wrong · quick ↔ slow · bored ↔ excited · below ↔ above · turn off ↔ turn on · reduce ↔ increase · melt ↔ freeze · rise ↔ fall"],
+      ["형용사 → 부사","complete → completely · lucky → luckily · proper → properly · quick → quickly"],
+      ["파생어","environment → environmental (형) · pollution ← pollute (동) · protect → protection (명) · create → creative (형) · invite → invitation (명) · deliver → delivery (명) · save → saver (명) · important → importance (명)"],
+      ["불규칙 동사","grow-grew-grown · rise-rose-risen · bring-brought-brought · buy-bought-bought · draw-drew-drawn · hurt-hurt-hurt · wear-wore-worn · throw-threw-thrown · win-won-won"],
+      ["접두사 · 접미사","re- (다시): recycle, reuse, remake, refill · -er (도구): container, toaster, printer, heater, burner, cutter"]],
+ p:[
+ {h:"Listen and Talk 단어",lv:1,
+  w:[["activity","명","활동, 행동","something you do, like a game, work, or exercise","",1],
+     ["bottle","명","병","a container, usually made of glass or plastic, for holding liquids",""],
+     ["eco","명","생태(학), 환경","having to do with nature and the environment","= ecology · eco-friendly 친환경적인"],
+     ["environment","명","환경","the natural world around us, including air, water, land, and living things","environmental (형) 환경의",1],
+     ["grow","동","기르다, 재배하다","to take care of something so it gets bigger or develops","grow-grew-grown",1],
+     ["join","동","가입하다","to become a member of","= take part in (참여하다)",1],
+     ["light","명","전등; 빛","a lamp; the brightness that lets us see","↔ dark (어둠)"],
+     ["melt","동","녹다; 사라지다","to change from solid to liquid because of heat","↔ freeze (얼다)"],
+     ["plant","명·동","(명) 식물 (동) 심다, 뿌리다","to place a seed or plant in the ground so it can grow","명사·동사 둘 다 쓰여요",1],
+     ["pollution","명","오염, 공해","dirty or harmful things in the air, water, or land","pollute (동) 오염시키다",1],
+     ["problem","명","문제","something that is difficult and needs to be solved","= trouble"],
+     ["quick","형","빠른","moving or acting with speed; fast","= fast ↔ slow · quickly (부) 빨리",1],
+     ["recycle","동","재활용하다","to make something new again from used things","re-(다시) + cycle · recycling (명) 재활용",1],
+     ["reduce","동","줄이다","to make something smaller or less","= lessen ↔ increase",1],
+     ["rise","동","오르다","to go up or become higher","rise-rose-risen ↔ fall"],
+     ["save","동","구하다; 절약하다","not to use too much of something","↔ waste (낭비하다) · saver (명) 절약가",1],
+     ["serious","형","심각한, 심한","very bad or worrying",""],
+     ["soil","명","토양, 흙","the top layer of the ground where plants grow","= earth, dirt"],
+     ["temperature","명","온도, 기온","how hot or cold something is",""],
+     ["waste","명·동","(명) 쓰레기 (동) 낭비하다","things that are not needed or are thrown away","(명) = trash, garbage · (동) ↔ save",1]],
+  q:[["m","영영풀이: the natural world around us, including air, water, land, and living things","environment","environment(환경)의 교과서 영영풀이예요.",["environment","pollution","resource","temperature"]],
+     ["m","영영풀이: to make something new again from used things","recycle","re-(다시) + cycle → recycle(재활용하다)이에요.",["recycle","reduce","protect","create"]],
+     ["m","영영풀이: to make something smaller or less","reduce","reduce(줄이다) = lessen이에요.",["reduce","rise","melt","grow"]],
+     ["m","영영풀이: dirty or harmful things in the air, water, or land","pollution","pollution(오염, 공해)이에요. waste는 '필요 없거나 버려진 것'이에요.",["pollution","soil","waste","activity"]],
+     ["m","We plant trees every spring. 에서 plant의 품사와 뜻은?","동사 - 심다","주어 We 뒤 동사 자리 → 동사 '심다'예요. 명사일 때는 '식물'이에요.",["동사 - 심다","명사 - 식물","형용사 - 식물의","명사 - 공장"]],
+     ["b","reduce(줄이다)의 유의어: ___ (l로 시작)","lessen","reduce = lessen이에요."],
+     ["b","waste(낭비하다)의 반의어: ___","save","waste(낭비하다) ↔ save(절약하다)예요."],
+     ["b","quick(빠른)의 부사형: ___","quickly","형용사 + -ly → quickly(빨리)예요. 반의어는 slow예요."],
+     ["b","grow - grew - ___","grown","grow의 과거분사는 grown이에요."],
+     ["b","The ice at the North Pole is ___ because of global warming. (녹다, -ing)","melting","melt(녹다) → be melting(녹고 있다)이에요."],
+     ["b","The ___ is 35°C today. It's really hot! (온도, 기온)","temperature","temperature = 온도, 기온이에요."],
+     ["a","환경 오염은 심각한 문제이다.","Environmental pollution is a serious problem.","environment의 형용사형 environmental(환경의) + pollution이에요."]]},
+ {h:"숙어 · Real-Life 단어",lv:1,
+  w:[["a lot of","숙","많은 ~","a large number or amount of","셀 수 있는 명사, 셀 수 없는 명사 모두 수식 · = lots of"],
+     ["for example","숙","예를 들면","used to give an example","= for instance · example (명) 예, 보기"],
+     ["global warming","명","지구 온난화","the slow rise in the Earth's temperature",""],
+     ["greenhouse gas","명","온실가스","a gas, like carbon dioxide, that keeps heat in the air","예: 이산화탄소(carbon dioxide)"],
+     ["in danger","숙","위험에 처한","likely to be hurt or killed","↔ safe (안전한)"],
+     ["pick up","숙","~을 줍다, ~을 들다","to take something up from the ground",""],
+     ["polar bear","명","북극곰","a large white bear that lives near the North Pole",""],
+     ["take part in","숙","~에 참석하다","to join an activity or event","= join, participate in"],
+     ["turn off","숙","~을 끄다, ~을 잠그다","to stop a light, machine, or water from working or running","↔ turn on (켜다)"],
+     ["bring","동","가져오다","to carry something with you to a place","bring-brought-brought ↔ take"],
+     ["buy","동","사다","to get something by paying money for it","buy-bought-bought ↔ sell (팔다)"],
+     ["container","명","용기, 통","an object that can hold or carry something","contain(담다) + -er(도구)",1],
+     ["item","명","물품, 물건","a single thing in a list or group",""],
+     ["own","형","자신의, 내 소유의","belonging to yourself","my own ~ / our own ~ 자신의 ~"],
+     ["receipt","명","영수증","a piece of paper that shows what you paid for","p는 소리 나지 않아요 [risíːt]"],
+     ["snack","명","과자, 간단한 식사[간식]","a small amount of food eaten between meals",""],
+     ["straw","명","빨대","a thin tube that you use to drink something",""],
+     ["by phone","숙","전화로","using a telephone",""]],
+  q:[["m","영영풀이: an object that can hold or carry something","container","container(용기, 통)는 contain + -er(도구)예요.",["container","receipt","straw","item"]],
+     ["m","for example과 뜻이 같은 것은?","for instance","for example = for instance(예를 들면)예요.",["for instance","for a long time","by phone","in danger"]],
+     ["b","Polar bears are ___ danger because the ice is melting.","in","in danger = 위험에 처한이에요."],
+     ["b","Let's pick ___ the trash on the beach. (줍다)","up","pick up = ~을 줍다예요."],
+     ["b","Many students took ___ in the clean-up activity. (참여했다)","part","take part in = ~에 참석하다(= join)예요."],
+     ["b","Please turn ___ the lights when you leave the room. (끄다)","off","turn off(끄다) ↔ turn on(켜다)이에요."],
+     ["b","buy(사다)의 반의어: ___","sell","buy ↔ sell이에요."],
+     ["b","bring - ___ - brought (과거형)","brought","bring-brought-brought예요."],
+     ["b","We can carry our ___ bottles to school. (자신의)","own","our own ~ = 우리 자신의 ~예요."],
+     ["m","I didn't use a plastic ___ to drink my juice.","straw","음료를 마실 때 쓰는 빨대는 straw예요.",["straw","receipt","snack","tap"]],
+     ["b","Do you need a ___ for the things you bought? (영수증)","receipt","receipt = 영수증, p는 묵음이에요."],
+     ["a","북극곰들은 지구 온난화 때문에 위험에 처해 있다.","Polar bears are in danger because of global warming.","be in danger + because of + 명사구예요."]]},
+ {h:"Reading 단어 · 숙어",lv:2,
+  w:[["amazing","형","굉장한, 놀라운","very surprising and wonderful","= surprising, wonderful"],
+     ["below","전","아래에","under; lower than something","↔ above (위에)"],
+     ["bin","명","쓰레기통","a container used for putting trash or things that are not needed","= trash can",1],
+     ["completely","부","완전히","fully or totally, with nothing missing","complete (형) 완전한 · = totally",1],
+     ["correct","형·동","(형) 알맞은 (동) 고치다","right and not wrong","= right ↔ wrong",1],
+     ["create","동","창조하다, 만들다","to make something new","= make, produce · creative (형) 창의적인"],
+     ["draw","동","그리다","to make a picture with a pencil or pen","draw-drew-drawn"],
+     ["ground","명","땅바닥, 지면","the surface of the earth",""],
+     ["hurt","동·형","(동) 다치게 하다 (형) 다친; 기분이 상한","to cause pain or harm to someone","hurt-hurt-hurt ↔ heal (치료하다)"],
+     ["important","형","중요한","having great value or meaning","importance (명) 중요성"],
+     ["luckily","부","다행히","in a way that is fortunate or brings good luck","lucky (형) 행운의",1],
+     ["movement","명","(사회적) 운동, 움직임","a group of people working together for a goal; the act of moving","move (동) 움직이다"],
+     ["piece","명","조각, 단편, 부분","a part of a whole","a piece of ~ ~ 한 조각",1],
+     ["properly","부","적절히, 제대로","in the right or correct way","proper (형) 적절한",1],
+     ["protect","동","보호하다, 지키다","to keep something or someone safe from harm or danger","= keep · protection (명) 보호",1],
+     ["resource","명","자원","something useful that people use to help them live or do work","natural resources 천연자원",1],
+     ["tap","명","수도꼭지","a device used to control the flow of water from a pipe","= faucet",1],
+     ["too","부","~도 또한; 너무","also; more than is needed","너무: 형용사·부사를 수식 (too hot)"],
+     ["useful","형","유용한","helpful or practical","↔ useless · use + -ful",1],
+     ["wear","동","입다","to have clothes on your body","wear-wore-worn · = put on"],
+     ["wizard","명","마법사","a man who has magic powers",""],
+     ["take a shower","숙","샤워를 하다","to wash your body under running water",""],
+     ["throw away","숙","버리다, 없애다","to put something in the trash because you don't need it","throw-threw-thrown"],
+     ["break down","숙","분해하다, 부수다","to become smaller pieces over time","Plastic takes a long time to break down."],
+     ["for a long time","숙","오랫동안","during a long period",""],
+     ["put A in B","숙","A를 B에 넣다","to place A inside B",""],
+     ["make sure","숙","확실하게 하다, 확인하다","to check that something is done or true","make sure (that) + 주어 + 동사"],
+     ["match A with B","숙","A와 B를 맞추다[연결하다]","to put A and B together because they go well","" ]],
+  q:[["m","영영풀이: a container used for putting trash or things that are not needed","bin","bin(쓰레기통) = trash can이에요.",["bin","tap","piece","ground"]],
+     ["m","영영풀이: fully or totally, with nothing missing","completely","completely(완전히) ← complete(완전한)예요.",["completely","properly","luckily","quickly"]],
+     ["m","영영풀이: in the right or correct way","properly","properly(적절히, 제대로) ← proper(적절한)예요.",["properly","completely","luckily","below"]],
+     ["m","영영풀이: something useful that people use to help them live or do work","resource","resource(자원)예요.",["resource","movement","activity","wizard"]],
+     ["m","영영풀이: a device used to control the flow of water from a pipe","tap","tap(수도꼭지)이에요.",["tap","bin","straw","container"]],
+     ["m","영영풀이: a part of a whole","piece","piece(조각, 부분)예요.",["piece","ground","item","movement"]],
+     ["b","protect(보호하다)의 유의어: ___ (k로 시작)","keep","protect = keep(지키다)이에요."],
+     ["b","hurt(다치게 하다)의 반의어: ___","heal","hurt ↔ heal(치료하다)이에요."],
+     ["b","useful(유용한)의 반의어: ___","useless","-ful(있는) ↔ -less(없는) → useless예요."],
+     ["b","correct(알맞은)의 반의어: ___","wrong","correct = right ↔ wrong이에요."],
+     ["b","Plastic takes a long time to break ___. (분해되다)","down","break down = 분해하다, 부수다예요."],
+     ["b","Don't throw ___ your old clothes. You can reuse them. (버리다)","away","throw away = 버리다예요."],
+     ["b","Make ___ you turn off the tap after you wash your hands. (확실히 하다)","sure","make sure = 확실하게 하다예요."],
+     ["b","wear - ___ - worn (과거형)","wore","wear-wore-worn이에요."],
+     ["b","proper(적절한)의 부사형: ___","properly","proper + -ly → properly예요."],
+     ["a","다행히, 그 새는 다치지 않았다.","Luckily, the bird was not hurt.","luckily = 다행히, hurt(형) = 다친이에요."]]},
+ {h:"Language Focus · Think & Write · Words Plus",lv:2,
+  w:[["bored","형","지루한","feeling tired because something is not interesting","↔ excited (신나는) · boring 지루하게 하는"],
+     ["hope","동","희망하다","to want something to happen","hope to + 동사원형 / hope (that) + 주어 + 동사"],
+     ["invite","동","초대하다","to ask someone to come to an event or party","invitation (명) 초대 · invite A to B"],
+     ["nervous","형","불안한, 긴장한","worried or a little afraid about something","= worried ↔ calm"],
+     ["take a test","숙","시험을 보다","to answer questions to show what you know",""],
+     ["win a contest","숙","대회에서 이기다","to come first in a competition","win-won-won"],
+     ["delivery","명","배달","the act of bringing things to a place","deliver (동) 배달하다"],
+     ["share","동","나누다, 공유하다","to use or have something together with others","share A with B"],
+     ["reuse","동","다시 쓰다","to use something again","re-(다시) + use"],
+     ["remake","동","다시 만들다","to make something again, often in a new way","re-(다시) + make"],
+     ["refill","동","다시 채우다","to fill something again","re-(다시) + fill"],
+     ["heater","명","히터, 난방기","a machine that makes a room warm","heat + -er(도구)"]],
+  q:[["b","bored(지루한)의 반의어: ___ (신나는)","excited","bored ↔ excited예요."],
+     ["m","I was so ___ before the test that my hands were shaking.","nervous","손이 떨릴 정도로 긴장한 → nervous예요.",["nervous","bored","useful","amazing"]],
+     ["b","We hope ___ she will win the contest. (접속사)","that","hope + that + 주어 + 동사예요."],
+     ["b","She invited me ___ her birthday party.","to","invite A to B = A를 B에 초대하다예요."],
+     ["b","'다시'를 뜻하는 re- : use → ___ (다시 쓰다)","reuse","re- + use = reuse예요."],
+     ["b","Can you please ___ my glass? (다시 채우다)","refill","re- + fill = refill이에요."],
+     ["m","'도구'를 뜻하는 -er이 쓰인 단어가 아닌 것은?","teacher","teacher는 '사람'을 뜻하는 -er이에요. 나머지는 도구예요.",["teacher","container","toaster","heater"]],
+     ["b","lucky(행운의)의 부사형: ___","luckily","y를 i로 바꾸고 -ly → luckily예요."],
+     ["b","complete(완전한)의 부사형: ___","completely","complete + -ly → completely예요."],
+     ["b","waste(쓰레기)의 유의어: ___ (t로 시작)",["trash","garbage"],"waste = trash, garbage예요."],
+     ["b","The food ___ came 30 minutes late. (배달)","delivery","deliver(배달하다)의 명사형 delivery예요."],
+     ["a","우리는 우리의 아이디어를 친구들과 나누었다.","We shared our ideas with our friends.","share A with B = A를 B와 나누다예요."]]},
+ {h:"종합 · 영영풀이 보고 쓰기",lv:3,
+  c:["교과서 영영풀이를 보고 <b>단어 철자를 직접</b> 써요. 괄호 속 첫 글자가 힌트예요.","유의어(=), 반의어(↔), 파생어, 불규칙 동사를 섞어서 시험처럼 풀어요."],
+  q:[["b","to become a member of → ___ (j)","join","join = 가입하다예요."],
+     ["b","to take care of something so it gets bigger or develops → ___ (g)","grow","grow = 기르다, 재배하다예요."],
+     ["b","to keep something or someone safe from harm or danger → ___ (p)","protect","protect = 보호하다(= keep)예요."],
+     ["b","moving or acting with speed; fast → ___ (q)","quick","quick = 빠른(↔ slow)이에요."],
+     ["b","helpful or practical → ___ (u)","useful","useful = 유용한(↔ useless)이에요."],
+     ["b","something you do, like a game, work, or exercise → ___ (a)","activity","activity = 활동이에요."],
+     ["b","right and not wrong → ___ (c)","correct","correct = 알맞은(↔ wrong)이에요."],
+     ["b","not to use too much of something → ___ (s)","save","save = 절약하다(↔ waste)예요."],
+     ["b","things that are not needed or are thrown away → ___ (w)",["waste","trash","garbage"],"교과서 풀이는 waste(쓰레기)예요. = trash, garbage."],
+     ["b","in a way that is fortunate or brings good luck → ___ (l)","luckily","luckily = 다행히예요."],
+     ["b","Plastic bags are not ___. They are useless. (useless의 반의어)","useful","useful ↔ useless예요."],
+     ["b","We must ___ the amount of plastic we use. (reduce의 유의어, l)","lessen","reduce = lessen이에요."],
+     ["b","The sea level will ___ if the ice keeps melting. (fall의 반의어)","rise","rise(오르다) ↔ fall(떨어지다)이에요."],
+     ["b","He ___ a beautiful picture of the Earth yesterday. (draw, 과거)","drew","draw-drew-drawn이에요."],
+     ["b","I ___ my leg while I was playing soccer yesterday. (hurt, 과거)","hurt","hurt-hurt-hurt, 과거형도 hurt예요."],
+     ["a","우리는 지구를 보호하기 위해 쓰레기를 줄여야 한다.","We should reduce waste to protect the Earth.","reduce waste = 쓰레기를 줄이다, to protect = 보호하기 위해예요."]]}]},
 
 {id:"t13",u:7,name:"목적어 + 보어",p:[
  {h:"make / keep + 목적어 + 형용사",lv:1,
@@ -1043,7 +1233,7 @@ function home(){
     for(const tp of TOPICS.filter(x=>x.u===u.n)){
       const done=topicDone(tp), n=partsDone(tp), rec=!done&&S.rec.includes(tp.id);
       const cls=done?"done":rec?"rec":open?"":"locked";
-      const sub=done?"완료 · 다시 보기":!open?"앞 단원을 끝내면 열려요":(rec?"추천 · ":"")+"스텝 "+n+"/"+tp.p.length+" · 기본~중3";
+      const sub=done?"완료 · 다시 보기":!open?"앞 단원을 끝내면 열려요":(rec?"추천 · ":"")+"스텝 "+n+"/"+tp.p.length+" · "+(tp.rg||"기본~중3");
       html+=`<button class="stop ${cls} ${tp.id===nextId?"next":""}" data-t="${tp.id}" ${open?"":'aria-disabled="true"'}>
         <span class="node">${done?ICON.check:open?ICON.star:ICON.lock}</span>
         <span class="lbl"><b>${esc(tp.name)}</b><span>${sub}</span></span></button>`;
@@ -1073,17 +1263,26 @@ function topicPage(tp,focus){
   let html=`<div class="lesson-top"><button class="x" id="close" aria-label="홈으로">${ICON.back}</button>
     <div class="steps-mini" style="flex:1">${tp.p.map((_,i)=>`<i class="${S.done[partKey(tp,i)]?"on":""}"></i>`).join("")}</div></div>
     <div class="topic-head"><span class="tag">${tp.u}단원 · ${esc(UNITS[tp.u-1].title)}</span><h1>${esc(tp.name)}</h1>
-    <p class="sub">개념을 읽고 스텝마다 ${tp.p[0].q.length}문제씩 풀어요. 기본부터 중3 개념까지 차례로 올라가요.</p></div>`;
+    <p class="sub">${tp.intro?esc(tp.intro):`개념을 읽고 스텝마다 ${tp.p[0].q.length}문제씩 풀어요. 기본부터 중3 개념까지 차례로 올라가요.`}</p></div>`;
+  if(tp.rel)html+=`<section class="part"><div class="part-top"><span class="part-no">한눈에 보기</span><h2>유의어 · 반의어 · 파생어</h2></div>
+    <div class="relbox">${tp.rel.map(r=>`<div><b>${esc(r[0])}</b><span class="en">${esc(r[1])}</span></div>`).join("")}</div></section>`;
+  if(tp.p.some(p=>p.w))html+=`<div class="wtools"><button class="btn ghost" data-hide="ko">한글 뜻 가리기</button><button class="btn ghost" data-hide="en">영영풀이 가리기</button></div>
+    <p class="sub" style="margin-top:-4px">가린 상태에서 단어 카드를 누르면 뜻이 보여요.</p>`;
   tp.p.forEach((p,i)=>{
     const done=S.done[partKey(tp,i)];
     html+=`<section class="part ${i===nextPi?"next":""}" id="part${i}"><div class="part-top"><span class="part-no">스텝 ${i+1}</span>${lvTag(p.lv)}<h2>${esc(p.h)}</h2></div>
-      <ul>${p.c.map(x=>`<li>${x}</li>`).join("")}</ul>
-      <div class="ex">${p.ex.map(e=>`<div><span class="en">${e[0]}</span>${e[1]?`<span>${esc(e[1])}</span>`:""}</div>`).join("")}</div>
+      ${p.c?`<ul>${p.c.map(x=>`<li>${x}</li>`).join("")}</ul>`:""}
+      ${p.w?`<div class="wlist">${p.w.map(w=>`<button class="wd"><span class="wd-top"><b>${esc(w[0])}</b>${w[1].split("·").map(x=>`<span class="pos p-${x}">${x}</span>`).join("")}${w[5]?'<span class="tb">교과서</span>':""}</span>
+        <span class="wd-ko">${esc(w[2])}</span><span class="wd-en en">${esc(w[3])}</span>${w[4]?`<span class="wd-rel en">${esc(w[4])}</span>`:""}</button>`).join("")}</div>`:""}
+      ${p.ex?`<div class="ex">${p.ex.map(e=>`<div><span class="en">${e[0]}</span>${e[1]?`<span>${esc(e[1])}</span>`:""}</div>`).join("")}</div>`:""}
       <button class="btn ${done?"done":""}" data-pi="${i}">${done?"완료 · 다시 풀기":"스텝 "+(i+1)+" 문제 풀기 ("+p.q.length+"문제)"}</button></section>`;
   });
   app.innerHTML=html;
   $("#close").onclick=home;
   app.querySelectorAll("[data-pi]").forEach(b=>b.onclick=()=>startLesson(tp,+b.dataset.pi));
+  app.querySelectorAll("[data-hide]").forEach(b=>b.onclick=()=>{const on=!b.classList.contains("on");b.classList.toggle("on",on);
+    app.querySelectorAll(".wlist").forEach(l=>{l.classList.toggle("hide-"+b.dataset.hide,on);l.querySelectorAll(".wd").forEach(c=>c.classList.remove("show"))})});
+  app.querySelectorAll(".wd").forEach(c=>c.onclick=()=>c.classList.toggle("show"));
   const f=focus!=null?focus:(nextPi>0?nextPi:null);
   if(f!=null&&document.getElementById("part"+f))document.getElementById("part"+f).scrollIntoView({block:"start"});
   else window.scrollTo(0,0);
@@ -1120,6 +1319,11 @@ function next(){
     <p class="sentence en">${parts[0]}<span class="blank">?</span>${parts[1]||""}</p>
     <input class="answer-input" id="ans" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="여기에 입력">
     <p class="note">두 단어 이상이 들어갈 수도 있어요.</p>`;
+  }else if(it.q[0]==="m"){
+    SS.opts=shuffle(it.q[4]); SS.choice=null;
+    body=`<p class="q-guide">알맞은 것을 고르세요</p>
+    <p class="q-prompt en">${esc(it.q[1])}</p>
+    <div class="choices">${SS.opts.map((o,i)=>`<button class="choice en" data-ci="${i}">${esc(o)}</button>`).join("")}</div>`;
   }else{
     const {words}=splitSent(it.q[2]);
     SS.bank=shuffleNotSame(words);
@@ -1140,6 +1344,9 @@ function next(){
     const inp=$("#ans"); inp.oninput=()=>chk.disabled=!inp.value.trim();
     inp.onkeydown=e=>{if(e.key==="Enter"&&inp.value.trim())check()};
     setTimeout(()=>inp.focus(),50);
+  }else if(it.q[0]==="m"){
+    app.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{if(SS.lock)return;SS.choice=SS.opts[+b.dataset.ci];
+      app.querySelectorAll(".choice").forEach(x=>x.classList.toggle("on",x===b));chk.disabled=false});
   }else{
     $("#arrange").addEventListener("pointerdown",dragDown);
     renderArr(-1,0);
@@ -1216,6 +1423,10 @@ function check(){
     mine=$("#ans").value.trim(); const ans=[].concat(q[2]);
     ok=ans.some(a=>norm(a)===norm(mine)); shown=ans.join(" / ");
     $("#ans").disabled=true;
+  }else if(q[0]==="m"){
+    mine=SS.choice; ok=mine===q[2]; shown=q[2]; SS.lock=true;
+    app.querySelectorAll(".choice").forEach(b=>{const o=SS.opts[+b.dataset.ci];b.disabled=true;
+      if(o===q[2])b.classList.add("right");else if(o===mine)b.classList.add("wrong")});
   }else{
     const {words,end}=splitSent(q[2]);
     const got=SS.picked.map(i=>SS.bank[i]);
@@ -1250,7 +1461,7 @@ function wrongList(){
   return `<section class="wrongs"><h2>틀린 문제 ${w.length}개</h2>${w.map(x=>{
     const q=x.it.q, r=qById(x.it.id), t=r.t;
     const where=r.pi!=null?`${esc(t.name)} · 스텝 ${r.pi+1}`:`${t.u}단원 · ${esc(t.name)}`;
-    const prompt=q[0]==="b"?`<span class="en">${esc(q[1])}</span>`:esc(q[1]);
+    const prompt=q[0]!=="a"?`<span class="en">${esc(q[1])}</span>`:esc(q[1]);
     return `<div class="w"><div class="h">${x.it.no}번<span>${where}</span></div>
       <p class="qq">${prompt}</p>
       <p>내 답: <span class="mine en">${esc(x.mine||"(빈칸)")}</span></p>
