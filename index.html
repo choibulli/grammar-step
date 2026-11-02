@@ -232,7 +232,7 @@ img{max-width:100%}
 .choice.right{border-color:var(--good);background:var(--good-soft)}
 .choice.wrong{border-color:var(--bad);background:var(--bad-soft)}
 .choice:disabled{cursor:default}
-.q-prompt{font-size:18px;line-height:1.6;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.q-prompt{white-space:pre-line;font-size:18px;line-height:1.6;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
 </style></head><body>
 
 <div class="wrap" id="app"></div>
@@ -768,6 +768,72 @@ const TOPICS=[
      ["b","He ___ a beautiful picture of the Earth yesterday. (draw, 과거)","drew","draw-drew-drawn이에요."],
      ["b","I ___ my leg while I was playing soccer yesterday. (hurt, 과거)","hurt","hurt-hurt-hurt, 과거형도 hurt예요."],
      ["a","우리는 지구를 보호하기 위해 쓰레기를 줄여야 한다.","We should reduce waste to protect the Earth.","reduce waste = 쓰레기를 줄이다, to protect = 보호하기 위해예요."]]}]},
+
+{id:"r7",u:7,name:"7단원 본문",rg:"학습목표 · 본문 이해 · 빈칸 · 글의 순서",intro:"You're an Environmental Superhero! 본문을 세 부분(도입+Recycle Wizard / Fashion Clever / Water Saver)으로 나눠 읽고, 본문 이해·빈칸·글의 순서 문제를 풀어요. 본문과 우리말 해석을 먼저 읽고 풀어 보세요.",
+ p:[
+ {h:"학습목표 · 도입 + Recycle Wizard",lv:1,
+  c:["<b>Functions</b> 알거나 모름 표현하기 → A: <b>Do you know about</b> global warming? B: Yes, I do. / No, I don't.","<b>Functions</b> 예시 들기 → <b>For example</b>, we can carry our own water bottles.","<b>Forms</b> They want to <b>make the world clean</b>. (make + 목적어 + 형용사)","<b>Forms</b> Also, make sure <b>that</b> you turn off the tap completely. (접속사 that)","<b>Before You Begin</b> 환경을 보호하기 위해 각자 실천하는 일을 이야기해 봅시다."],
+  ex:[["Pollution is a big problem. Luckily, three superheroes are working to protect the environment. They want to make the world clean. Will you join them?","오염은 큰 문제이다. 다행히 세 명의 슈퍼히어로가 환경을 보호하기 위해 일하고 있다. 그들은 세상을 깨끗하게 만들고 싶어 한다. 여러분도 그들과 함께하겠는가?"],
+      ["Hi! I'm Recycle Wizard. People waste too many resources. But recycling can save them. For example, recycling 1,000 kilograms of paper can save about 19 trees and 29,000 liters of water. Do you want to be a wizard at recycling? Then you should recycle properly! Put plastic, paper, food waste, and glass in the correct bins.","안녕! 나는 재활용 마법사야. 사람들은 너무 많은 자원을 낭비해. 하지만 재활용은 그것들을 아낄 수 있어. 예를 들어, 종이 1,000킬로그램을 재활용하면 나무 약 19그루와 물 29,000리터를 아낄 수 있어. 재활용의 마법사가 되고 싶니? 그렇다면 제대로 재활용해야 해! 플라스틱, 종이, 음식물 쓰레기, 유리를 알맞은 통에 넣어."]],
+  q:[["m","How many superheroes are working to protect the environment?","Three","첫 문단: three superheroes are working to protect the environment.",["One","Two","Three","Four"]],
+     ["m","What do the superheroes want to do?","Make the world clean","They want to make the world clean.",["Make the world clean","Make the world bigger","Make new clothes","Find new water"]],
+     ["m","'People waste too many resources. But recycling can save them.'에서 them이 가리키는 것은?","resources","them = 앞 문장의 복수명사 resources(자원)예요.",["resources","people","superheroes","bins"]],
+     ["m","Q1. What can we save when we recycle 1,000 kilograms of paper?","About 19 trees and 29,000 liters of water","종이 1,000kg을 재활용하면 나무 약 19그루와 물 29,000리터를 아낄 수 있어요.",["About 19 trees and 29,000 liters of water","About 29 trees and 19,000 liters of water","About 19 trees and 1,000 liters of water","About 1,000 trees and 19 liters of water"]],
+     ["m","다음 중 본문의 내용과 일치하지 않는 것은?","Recycling makes people waste more resources.","재활용은 자원을 아낄 수 있다고 했어요. 나머지는 모두 본문 내용이에요.",["Pollution is a big problem.","Recycle Wizard wants us to recycle properly.","Plastic, paper, food waste, and glass go in the correct bins.","Recycling makes people waste more resources."]],
+     ["b","Pollution is a big problem. ___, three superheroes are working to protect the environment. (다행히)","Luckily","luckily = 다행히 (lucky의 부사형)예요."],
+     ["b","They want to make the world ___. (깨끗한)","clean","make + 목적어(the world) + 형용사(clean) → 세상을 깨끗하게 만들다예요."],
+     ["b","People waste too many ___. But recycling can save them. (자원)","resources","resources = 자원이에요."],
+     ["b","For ___, recycling 1,000 kilograms of paper can save about 19 trees. (예를 들어)","example","For example = 예를 들어예요. (= For instance)"],
+     ["b","Do you want to be a wizard at recycling? Then you should recycle ___! (제대로)","properly","proper(적절한) + -ly → properly(제대로)예요."],
+     ["b","A: Do you know about global warming? B: Yes, I ___.","do","Do you ~?로 물으면 Yes, I do. / No, I don't.로 답해요."],
+     ["a","예를 들어, 우리는 우리 자신의 물병을 가지고 다닐 수 있다.","For example, we can carry our own water bottles.","For example, + 문장 / our own = 우리 자신의예요."]]},
+
+ {h:"Fashion Clever",lv:1,
+  ex:[["I'm Fashion Clever. People throw away clothes too often. They become waste and hurt the environment. Did you know that some clothes take over 200 years to break down? Don't buy too many clothes. Wear your clothes for a long time. You can also create new items from your old clothes! Let's make old clothes useful.","나는 패션 클레버야. 사람들은 옷을 너무 자주 버려. 옷은 쓰레기가 되어 환경을 해쳐. 어떤 옷은 분해되는 데 200년이 넘게 걸린다는 걸 알고 있니? 옷을 너무 많이 사지 마. 옷을 오랫동안 입어. 낡은 옷으로 새로운 물건을 만들 수도 있어! 낡은 옷을 쓸모 있게 만들자."],
+      ["There are some items below. What can you make with these old clothes? Match the old clothes with the correct new items. Now you can be clever at fashion too!","아래에 몇 가지 물건이 있어요. 이 낡은 옷으로 무엇을 만들 수 있을까요? 낡은 옷을 알맞은 새 물건과 연결해 보세요. 이제 여러분도 패션에 똑똑해질 수 있어요!"]],
+  q:[["m","What do people do too often, according to Fashion Clever?","They throw away clothes.","People throw away clothes too often.",["They throw away clothes.","They wash their clothes.","They wear old clothes.","They make new clothes."]],
+     ["m","What happens when people throw away clothes?","They become waste and hurt the environment.","They become waste and hurt the environment.",["They become waste and hurt the environment.","They turn into new clothes.","They break down in a day.","They help the environment."]],
+     ["m","How long do some clothes take to break down?","Over 200 years","some clothes take over 200 years to break down.",["Over 20 years","Over 100 years","Over 200 years","Over 2,000 years"]],
+     ["m","'They become waste and hurt the environment.'에서 They가 가리키는 것은?","clothes","앞 문장의 clothes(옷)를 가리켜요.",["clothes","people","items","years"]],
+     ["m","Which is NOT advice from Fashion Clever?","Throw away your clothes often.","Fashion Clever는 옷을 자주 버리라고 하지 않았어요.",["Don't buy too many clothes.","Wear your clothes for a long time.","Create new items from your old clothes.","Throw away your clothes often."]],
+     ["m","Q2. How can you be clever at fashion?","By making old clothes useful.","Let's make old clothes useful. 낡은 옷을 쓸모 있게 만드는 거예요.",["By making old clothes useful.","By buying many new clothes.","By throwing away old clothes.","By washing clothes every day."]],
+     ["b","People ___ away clothes too often. (버리다)","throw","throw away = 버리다예요. (throw-threw-thrown)"],
+     ["b","Did you know that some clothes take over 200 years to ___ down? (분해되다)","break","break down = 분해되다예요."],
+     ["b","Don't buy too many clothes. Wear your clothes for a ___ time. (오랫동안)","long","for a long time = 오랫동안이에요."],
+     ["b","You can also ___ new items from your old clothes! (만들다, c)","create","create = 창조하다, 만들다예요."],
+     ["b","Match the old clothes ___ the correct new items. (연결하다)","with","match A with B = A와 B를 맞추다[연결하다]예요."],
+     ["a","우리는 낡은 옷을 쓸모 있게 만들 수 있다.","We can make old clothes useful.","make + 목적어(old clothes) + 형용사(useful)예요."]]},
+
+ {h:"Water Saver",lv:2,
+  ex:[["Hi! I'm Water Saver! Water is very important. We can't live without it. But people waste a lot of water. It makes me sad. How can we save water? Take quick showers. Turn off the water while you brush your teeth. Also, make sure that you turn off the tap completely.","안녕! 나는 물 지킴이야! 물은 매우 중요해. 우리는 물 없이는 살 수 없어. 하지만 사람들은 물을 많이 낭비해. 그게 나를 슬프게 해. 어떻게 하면 물을 아낄 수 있을까? 샤워를 빨리 해. 양치할 때는 물을 잠가. 또한 수도꼭지를 완전히 잠그도록 해."],
+      ["Look at the pictures below. Which are ways to save water and which are not? Write an O or X on each picture. I'm sure that you got the right answers. You are amazing at saving water!","아래 그림을 보세요. 어떤 것이 물을 아끼는 방법이고 어떤 것이 아닐까요? 각 그림에 O 또는 X를 쓰세요. 여러분이 정답을 맞혔다고 확신해요. 여러분은 물을 아끼는 데 정말 훌륭해요!"]],
+  q:[["m","Why is Water Saver sad?","Because people waste a lot of water.","But people waste a lot of water. It makes me sad.",["Because people waste a lot of water.","Because people drink too much water.","Because there is no tap.","Because he can't take a shower."]],
+     ["m","'It makes me sad.'에서 It이 가리키는 것은?","People waste a lot of water.","앞 문장 전체(사람들이 물을 많이 낭비하는 것)를 가리켜요. make + 목적어 + 형용사 구조예요.",["People waste a lot of water.","Water is very important.","The tap is open.","Water Saver is sad."]],
+     ["m","What does Water Saver say about water?","We can't live without it.","Water is very important. We can't live without it.",["We can't live without it.","We can find it everywhere.","It is not important.","It is only for showers."]],
+     ["m","Which is NOT a way to save water in the text?","Take long showers.","본문은 quick showers(빠른 샤워)를 하라고 했어요.",["Take quick showers.","Turn off the water while you brush your teeth.","Turn off the tap completely.","Take long showers."]],
+     ["m","'We can't live without it. ___ people waste a lot of water.'에 알맞은 연결어는?","But","물은 꼭 필요하다(앞)와 낭비한다(뒤)는 반대 내용이라 But이에요.",["But","So","Because","Then"]],
+     ["b","Water is very important. We can't ___ without it. (살다)","live","can't live without ~ = ~ 없이 살 수 없다예요."],
+     ["b","But people ___ a lot of water. (낭비하다)","waste","waste(낭비하다) ↔ save(절약하다)예요."],
+     ["b","Take ___ showers. (빠른)","quick","quick = 빠른 (부사형 quickly)이에요."],
+     ["b","Turn ___ the water while you brush your teeth. (잠그다)","off","turn off = ~을 끄다, 잠그다예요."],
+     ["b","Also, make ___ that you turn off the tap completely. (확실히 하다)","sure","make sure (that) + 주어 + 동사 = 확실히 ~하다예요."],
+     ["b","Make sure that you turn off the tap ___. (완전히)","completely","complete(완전한) + -ly → completely예요."],
+     ["a","수도꼭지를 완전히 잠그도록 확실히 해라.","Make sure that you turn off the tap completely.","make sure that + 주어 + 동사 / turn off ~ completely예요."]]},
+
+ {h:"글의 순서 · 종합",lv:3,
+  c:["<b>글의 순서</b> 문제: 연결어(But, Then, Also, For example)와 대명사(They, them, It)가 단서예요.","본문 전체 순서: 도입(Pollution…) → <b>Recycle Wizard</b> → <b>Fashion Clever</b> → <b>Water Saver</b>"],
+  q:[["m","주어진 글 다음에 이어질 순서로 가장 알맞은 것은?\n\n[Given] Pollution is a big problem.\n(A) Luckily, three superheroes are working to protect the environment.\n(B) Will you join them?\n(C) They want to make the world clean.","(A)-(C)-(B)","(A) 슈퍼히어로 소개 → (C) They(= superheroes)가 원하는 것 → (B) 함께하겠느냐는 질문 순서예요.",["(A)-(C)-(B)","(A)-(B)-(C)","(B)-(A)-(C)","(C)-(A)-(B)"]],
+     ["m","주어진 글 다음에 이어질 순서로 가장 알맞은 것은?\n\n[Given] People waste too many resources.\n(A) Do you want to be a wizard at recycling?\n(B) For example, recycling 1,000 kilograms of paper can save about 19 trees and 29,000 liters of water.\n(C) But recycling can save them.","(C)-(B)-(A)","But recycling can save them(them = resources) → For example(예시) → 질문(Do you want ~?) 순서예요.",["(C)-(B)-(A)","(A)-(B)-(C)","(B)-(C)-(A)","(C)-(A)-(B)"]],
+     ["m","주어진 글 다음에 이어질 순서로 가장 알맞은 것은?\n\n[Given] People throw away clothes too often.\n(A) Did you know that some clothes take over 200 years to break down?\n(B) They become waste and hurt the environment.\n(C) Don't buy too many clothes.","(B)-(A)-(C)","They(= clothes)가 쓰레기가 됨 → 200년 넘게 분해 → 해결책(Don't buy ~) 순서예요.",["(B)-(A)-(C)","(A)-(B)-(C)","(B)-(C)-(A)","(C)-(B)-(A)"]],
+     ["m","주어진 글 다음에 이어질 순서로 가장 알맞은 것은?\n\n[Given] Don't buy too many clothes.\n(A) You can also create new items from your old clothes!\n(B) Wear your clothes for a long time.\n(C) Let's make old clothes useful.","(B)-(A)-(C)","옷을 오래 입기 → also(또한) 새 물건 만들기 → 결론(Let's make old clothes useful) 순서예요.",["(B)-(A)-(C)","(A)-(B)-(C)","(C)-(B)-(A)","(B)-(C)-(A)"]],
+     ["m","주어진 글 다음에 이어질 순서로 가장 알맞은 것은?\n\n[Given] Hi! I'm Water Saver!\n(A) But people waste a lot of water.\n(B) Water is very important.\n(C) We can't live without it.","(B)-(C)-(A)","물은 중요하다 → 그것 없이 살 수 없다(it = water) → But 사람들은 낭비한다 순서예요.",["(B)-(C)-(A)","(A)-(B)-(C)","(C)-(B)-(A)","(B)-(A)-(C)"]],
+     ["m","주어진 글 다음에 이어질 순서로 가장 알맞은 것은?\n\n[Given] How can we save water?\n(A) Turn off the water while you brush your teeth.\n(B) Take quick showers.\n(C) Also, make sure that you turn off the tap completely.","(B)-(A)-(C)","첫 번째 방법(B) → 두 번째 방법(A) → Also로 이어지는 세 번째 방법(C) 순서예요.",["(B)-(A)-(C)","(A)-(B)-(C)","(C)-(B)-(A)","(B)-(C)-(A)"]],
+     ["m","본문에 나온 세 슈퍼히어로의 순서로 알맞은 것은?\n\n(A) Hi! I'm Water Saver! …\n(B) Hi! I'm Recycle Wizard. …\n(C) I'm Fashion Clever. …","(B)-(C)-(A)","본문 순서는 Recycle Wizard → Fashion Clever → Water Saver예요.",["(B)-(C)-(A)","(A)-(B)-(C)","(C)-(B)-(A)","(B)-(A)-(C)"]],
+     ["m","이 글의 주제로 가장 알맞은 것은?","Small actions that protect the environment","재활용, 옷 아껴 입기, 물 아끼기 등 환경을 지키는 작은 실천을 소개하는 글이에요.",["Small actions that protect the environment","How to become a superhero","The history of recycling","Why people love fashion"]],
+     ["b","Do you want to be a wizard at recycling? ___ you should recycle properly! (그렇다면)","Then","앞 질문에 대한 결과를 이끄는 연결어 Then(그렇다면)이에요."],
+     ["b","You can ___ create new items from your old clothes! (또한)","also","also = 또한이에요."],
+     ["b","I'm sure that you got the right answers. You are amazing ___ saving water!","at","be amazing at ~ = ~을 정말 잘하다예요."],
+     ["b","Water is very important. We ___ live without it. (~할 수 없다)",["can't","cannot","can not"],"can't live without it = 그것 없이는 살 수 없다예요."]]}]},
 
 {id:"t13",u:7,name:"목적어 + 보어",p:[
  {h:"make / keep + 목적어 + 형용사",lv:1,
